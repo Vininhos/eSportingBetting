@@ -18,8 +18,13 @@ public class Cliente extends Usuario implements InterfacePessoa, Serializable {
     }
 
     @Override
-    public void criaUsuario() {
+    public String leDados() {
+        return toString();
+    }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "idCliente=" + idCliente + ", usuario=" + usuario + ", senha=" + senha + '}';
     }
 
 }

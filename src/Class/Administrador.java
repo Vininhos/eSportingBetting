@@ -1,6 +1,8 @@
 package Class;
 
-public class Administrador extends Usuario implements InterfacePessoa {
+import java.io.Serializable;
+
+public class Administrador extends Usuario implements InterfacePessoa, Serializable {
 
     int idAdmin;
     String usuario;
@@ -15,8 +17,13 @@ public class Administrador extends Usuario implements InterfacePessoa {
     }
 
     @Override
-    public void criaUsuario() {
+    public String leDados() {
+       return toString();
+    }
 
+    @Override
+    public String toString() {
+        return "Administrador{" + "idAdmin=" + idAdmin + ", usuario=" + usuario + ", senha=" + senha + '}';
     }
 
 }

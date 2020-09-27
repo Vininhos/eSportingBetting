@@ -10,5 +10,5 @@ package Class;
  * @author vinni
  */
 public interface InterfacePessoa {
-    public void criaUsuario();
+    public String leDados();
 }

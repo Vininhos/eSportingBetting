@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class CadastroAdmin extends javax.swing.JFrame {
 
@@ -237,6 +238,8 @@ public class CadastroAdmin extends javax.swing.JFrame {
             ObjectOutputStream objStream = new ObjectOutputStream(new FileOutputStream(arquivo));
             objStream.writeObject(arrayAdmin);
             objStream.close();
+            JOptionPane.showMessageDialog(this, "Admin cadastrado com sucesso!");
+            dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

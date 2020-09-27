@@ -1,12 +1,19 @@
 package Jframe;
 
-import java.io.IOException;
-
 public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     public FrameMenuPrincipal() {
         initComponents();
         setLocationRelativeTo(this);
+        jmiGerarFundos.setVisible(false);
+    }
+    int valorFundoAtual = 0;
+    int saldoNovo = 0;
+    AdicionarFundos frameAdicionarFundos = new AdicionarFundos();
+    ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
+
+    public void ativaPrivilegiosAdministrador() {
+        jmiGerarFundos.setVisible(true);
     }
 
     /**
@@ -18,6 +25,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -26,12 +34,16 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmiCadAdmin = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmiRocketLeague = new javax.swing.JMenuItem();
-        jmiLeagueOfLegends = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jmiMeusDados = new javax.swing.JMenuItem();
         jmiDeslogar = new javax.swing.JMenuItem();
         jmiAdicionarFundos = new javax.swing.JMenuItem();
+        jmiGerarFundos = new javax.swing.JMenuItem();
+        jmUsuario = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jmiAtualizar = new javax.swing.JMenuItem();
         jmSaldoAtual = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("eSportingBetting");
@@ -86,25 +98,9 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jmiRocketLeague);
 
-        jmiLeagueOfLegends.setText("League of Legends");
-        jmiLeagueOfLegends.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiLeagueOfLegendsActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jmiLeagueOfLegends);
-
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Opções");
-
-        jmiMeusDados.setText("Meus dados");
-        jmiMeusDados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiMeusDadosActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jmiMeusDados);
 
         jmiDeslogar.setText("Deslogar");
         jMenu3.add(jmiDeslogar);
@@ -117,9 +113,32 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jmiAdicionarFundos);
 
+        jmiGerarFundos.setText("Gerar Milhões de Bolsonaros (ADM)");
+        jmiGerarFundos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGerarFundosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiGerarFundos);
+
         jMenuBar1.add(jMenu3);
 
-        jmSaldoAtual.setText("Saldo atual: 0,00");
+        jmUsuario.setText("issovaisermodificado");
+        jMenuBar1.add(jmUsuario);
+
+        jMenu4.setText("Dinheiros:");
+
+        jmiAtualizar.setText("Atualizar");
+        jmiAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAtualizarActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmiAtualizar);
+
+        jMenuBar1.add(jMenu4);
+
+        jmSaldoAtual.setText("0");
         jMenuBar1.add(jmSaldoAtual);
 
         setJMenuBar(jMenuBar1);
@@ -149,23 +168,31 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiCadAdminActionPerformed
 
     private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
-        ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
+        frameRocketLeague = new ApostaDoDiaRocketLeague();
+        frameRocketLeague.setaSaldoAtual(jmSaldoAtual.getText());
         frameRocketLeague.setVisible(true);
+        frameRocketLeague.iniciaComponentes();
     }//GEN-LAST:event_jmiRocketLeagueActionPerformed
 
-    private void jmiLeagueOfLegendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLeagueOfLegendsActionPerformed
-        ApostaDoDiaLoL frameLoL = new ApostaDoDiaLoL();
-        frameLoL.setVisible(true);
-    }//GEN-LAST:event_jmiLeagueOfLegendsActionPerformed
-
-    private void jmiMeusDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMeusDadosActionPerformed
-        MeusDados frameDados = new MeusDados();
-        frameDados.setVisible(true);
-    }//GEN-LAST:event_jmiMeusDadosActionPerformed
-
     private void jmiAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAdicionarFundosActionPerformed
-        // TODO add your handling code here:
+        frameAdicionarFundos.setVisible(true);
     }//GEN-LAST:event_jmiAdicionarFundosActionPerformed
+
+    private void jmiGerarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarFundosActionPerformed
+        jmSaldoAtual.setText("99999999");
+    }//GEN-LAST:event_jmiGerarFundosActionPerformed
+
+    private void jmiAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizarActionPerformed
+        int saldoAtual = Integer.parseInt(jmSaldoAtual.getText());
+        saldoNovo = saldoAtual + (frameAdicionarFundos.pegaValorFundosAtual()
+                + frameRocketLeague.atualizaFundos());
+        jmSaldoAtual.setText(saldoNovo + "");
+        saldoNovo = 0;
+        valorFundoAtual = 0;
+    }//GEN-LAST:event_jmiAtualizarActionPerformed
+    public void mudaNomeUsuario(String usuario) {
+        jmUsuario.setText(usuario);
+    }
 
     /**
      * @param args the command line arguments
@@ -208,14 +235,17 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jmSaldoAtual;
+    private javax.swing.JMenu jmUsuario;
     private javax.swing.JMenuItem jmiAdicionarFundos;
+    private javax.swing.JMenuItem jmiAtualizar;
     private javax.swing.JMenuItem jmiCadAdmin;
     private javax.swing.JMenuItem jmiCadCliente;
     private javax.swing.JMenuItem jmiDeslogar;
-    private javax.swing.JMenuItem jmiLeagueOfLegends;
-    private javax.swing.JMenuItem jmiMeusDados;
+    private javax.swing.JMenuItem jmiGerarFundos;
     private javax.swing.JMenuItem jmiRocketLeague;
     // End of variables declaration//GEN-END:variables
 }

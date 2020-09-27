@@ -122,11 +122,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Alimentar o Capitalismo"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAdicionarFundosActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbFechar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fechar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbFecharActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

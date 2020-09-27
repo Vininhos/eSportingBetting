@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class CadastroCliente extends javax.swing.JFrame {
 
@@ -248,9 +249,12 @@ public class CadastroCliente extends javax.swing.JFrame {
             ObjectOutputStream objStream = new ObjectOutputStream(new FileOutputStream(arquivo));
             objStream.writeObject(arrayCliente);
             objStream.close();
+            JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
+            dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     /**

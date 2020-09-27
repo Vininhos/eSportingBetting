@@ -1,5 +1,7 @@
 package Jframe;
 
+import javax.swing.JOptionPane;
+
 public class AdicionarFundos extends javax.swing.JFrame {
 
     /**
@@ -7,6 +9,16 @@ public class AdicionarFundos extends javax.swing.JFrame {
      */
     public AdicionarFundos() {
         initComponents();
+        setLocationRelativeTo(this);
+    }
+    int valorAtual = 0;
+    int aux = 0;
+
+    public int pegaValorFundosAtual() {
+        aux = valorAtual;
+        valorAtual = 0;
+        return aux;
+
     }
 
     /**
@@ -42,8 +54,18 @@ public class AdicionarFundos extends javax.swing.JFrame {
         jLabel4.setText("Valor:");
 
         jbAdicionarFundos.setText("Alimentar o Capitalismo");
+        jbAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAdicionarFundosActionPerformed(evt);
+            }
+        });
 
         jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,6 +121,15 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
+
+    private void jbAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarFundosActionPerformed
+        JOptionPane.showMessageDialog(this, "fundos adicionados com sucesso!");
+        valorAtual = Integer.parseInt(jtValor.getText());
+    }//GEN-LAST:event_jbAdicionarFundosActionPerformed
 
     /**
      * @param args the command line arguments

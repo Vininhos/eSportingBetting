@@ -1,12 +1,34 @@
 package Jframe;
 
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
-public class TelaLogin extends javax.swing.JFrame {
+public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(this);
+    }
+    FrameMenuPrincipal frameMenu = new FrameMenuPrincipal();
+
+    private void escolheTipoCadastro() {
+        int escolha = JOptionPane.showConfirmDialog(this, "Você deseja se cadastrar como cliente?", "Cadastro", 0);
+        CadastroCliente cadCliente = new CadastroCliente();
+        if (escolha == 0) {
+            cadCliente = new CadastroCliente();
+            cadCliente.setVisible(true);
+        } else if (escolha == 1) {
+            String comparador = JOptionPane.showInputDialog("Digite o código secreto para se cadastrar como admin...");
+            if (comparador.equalsIgnoreCase("Flyps é ruim")) {
+                JOptionPane.showMessageDialog(this, "Bem-vindo, Senhor supremo.");
+                CadastroAdmin cadAdmin = new CadastroAdmin();
+                cadAdmin.setVisible(true);
+                frameMenu.ativaPrivilegiosAdministrador();
+            } else {
+                JOptionPane.showMessageDialog(this, "Você ainda não está preparado...");
+                cadCliente.setVisible(true);
+            }
+        }
     }
 
     /**
@@ -20,13 +42,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jtUsuario = new javax.swing.JTextField();
-        jpfSenha = new javax.swing.JPasswordField();
         jbLogar = new javax.swing.JButton();
         jbSair = new javax.swing.JButton();
-        jbCadastro = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -36,9 +54,6 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Usuário:");
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Senha:");
 
         jbLogar.setText("Logar");
         jbLogar.addActionListener(new java.awt.event.ActionListener() {
@@ -54,46 +69,28 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        jbCadastro.setText("Cadastre-se");
-        jbCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadastroActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Não tem cadastro? Faça agora mesmo!");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbSair))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbLogar)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jbLogar))
+                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(jtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jpfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jbSair))
+                                .addComponent(jtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jbCadastro))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel1)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                .addGap(75, 75, 75)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbLogar, jbSair});
@@ -101,21 +98,13 @@ public class TelaLogin extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbCadastro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSair)
                     .addComponent(jbLogar))
@@ -125,34 +114,18 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastroActionPerformed
-        int escolha = JOptionPane.showConfirmDialog(this, "Você deseja se cadastrar como cliente?", "Cadastro", 0);
-
-        if (escolha == 0) {
-            CadastroCliente cadCliente = new CadastroCliente();
-            cadCliente.setVisible(true);
-        } else if (escolha == 1) {
-            String comparador = JOptionPane.showInputDialog("Digite o código secreto para se cadastrar como admin...");
-            if (comparador.equalsIgnoreCase("Flyps é um champion cansado")) {
-                CadastroAdmin cadAdmin = new CadastroAdmin();
-                cadAdmin.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Você ainda não está preparado...");
-            }
-        }
-    }//GEN-LAST:event_jbCadastroActionPerformed
-
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jbSairActionPerformed
 
     private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
-        if (jtUsuario.getText().equals("cu") && jpfSenha.getText().equals("cu")) {
-            dispose();
-            FrameMenuPrincipal frame = new FrameMenuPrincipal();
-            frame.setVisible(true);
-            JOptionPane.showMessageDialog(this, "Você logou com sucesso!");
-        }
+
+        dispose();
+        frameMenu.setVisible(true);
+        frameMenu.mudaNomeUsuario("Usuario atual: " + jtUsuario.getText());
+        JOptionPane.showMessageDialog(this, "Bem-vindo, "
+                + jtUsuario.getText() + ". Você logou com sucesso!");
+        escolheTipoCadastro();
     }//GEN-LAST:event_jbLogarActionPerformed
 
     /**
@@ -193,12 +166,8 @@ public class TelaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JButton jbCadastro;
     private javax.swing.JButton jbLogar;
     private javax.swing.JButton jbSair;
-    private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JTextField jtUsuario;
     // End of variables declaration//GEN-END:variables
 }
