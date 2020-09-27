@@ -1,7 +1,6 @@
 package Jframe;
 
 import Class.Administrador;
-import Class.Cliente;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -16,7 +15,19 @@ public class CadastroAdmin extends javax.swing.JFrame {
      */
     public CadastroAdmin() {
         initComponents();
+        apagaCampos();
         setLocationRelativeTo(this);
+    }
+
+    private void apagaCampos() {
+        jtUsuario.setText("");
+        jtAno.setText("");
+        jtCPF.setText("");
+        jtDia.setText("");
+        jtEmail.setText("");
+        jtMes.setText("");
+        jpfSenha.setText("");
+        jtNome.setText("");
     }
 
     /**
@@ -215,7 +226,6 @@ public class CadastroAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jbFecharActionPerformed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-
         try {
             Random random = new Random();
 
@@ -224,7 +234,8 @@ public class CadastroAdmin extends javax.swing.JFrame {
 
             arquivo.createNewFile();
             ArrayList<Administrador> arrayAdmin = new ArrayList();
-            Administrador admin = new Administrador(random.nextInt(300),
+            Administrador admin = new Administrador(
+                    random.nextInt(300),
                     jtUsuario.getText(),
                     jpfSenha.getText(),
                     jtNome.getText(),
@@ -239,7 +250,7 @@ public class CadastroAdmin extends javax.swing.JFrame {
             objStream.writeObject(arrayAdmin);
             objStream.close();
             JOptionPane.showMessageDialog(this, "Admin cadastrado com sucesso!");
-            dispose();
+            apagaCampos();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
