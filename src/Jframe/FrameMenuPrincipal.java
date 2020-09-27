@@ -1,5 +1,7 @@
 package Jframe;
 
+import java.io.IOException;
+
 public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     public void abrirTelaLogin() {
@@ -39,8 +41,13 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmiCadCliente = new javax.swing.JMenuItem();
         jmiCadAdmin = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jmiRocketLeague = new javax.swing.JMenuItem();
+        jmiLeagueOfLegends = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jmiMeusDados = new javax.swing.JMenuItem();
         jmiDeslogar = new javax.swing.JMenuItem();
+        jmiAdicionarFundos = new javax.swing.JMenuItem();
+        jmSaldoAtual = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("eSportingBetting");
@@ -85,14 +92,50 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Apostas");
+
+        jmiRocketLeague.setText("Rocket League");
+        jmiRocketLeague.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRocketLeagueActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiRocketLeague);
+
+        jmiLeagueOfLegends.setText("League of Legends");
+        jmiLeagueOfLegends.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiLeagueOfLegendsActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiLeagueOfLegends);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Opções");
 
+        jmiMeusDados.setText("Meus dados");
+        jmiMeusDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMeusDadosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiMeusDados);
+
         jmiDeslogar.setText("Deslogar");
         jMenu3.add(jmiDeslogar);
 
+        jmiAdicionarFundos.setText("Alimentar Capitalismo");
+        jmiAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAdicionarFundosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiAdicionarFundos);
+
         jMenuBar1.add(jMenu3);
+
+        jmSaldoAtual.setText("Saldo atual: 0,00");
+        jMenuBar1.add(jmSaldoAtual);
 
         setJMenuBar(jMenuBar1);
 
@@ -119,6 +162,31 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         CadastroAdmin cadAdmin = new CadastroAdmin();
         cadAdmin.setVisible(true);
     }//GEN-LAST:event_jmiCadAdminActionPerformed
+
+    private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
+        ApostaDoDiaRocketLeague frameRocketLeague;
+       
+            frameRocketLeague = new ApostaDoDiaRocketLeague();
+            frameRocketLeague.setVisible(true);
+      
+
+    }//GEN-LAST:event_jmiRocketLeagueActionPerformed
+
+    private void jmiLeagueOfLegendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLeagueOfLegendsActionPerformed
+        ApostaDoDiaLoL frameLoL = new ApostaDoDiaLoL();
+            frameLoL.setVisible(true);
+  
+
+    }//GEN-LAST:event_jmiLeagueOfLegendsActionPerformed
+
+    private void jmiMeusDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMeusDadosActionPerformed
+        MeusDados frameDados = new MeusDados();
+        frameDados.setVisible(true);
+    }//GEN-LAST:event_jmiMeusDadosActionPerformed
+
+    private void jmiAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAdicionarFundosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAdicionarFundosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,8 +230,13 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jmSaldoAtual;
+    private javax.swing.JMenuItem jmiAdicionarFundos;
     private javax.swing.JMenuItem jmiCadAdmin;
     private javax.swing.JMenuItem jmiCadCliente;
     private javax.swing.JMenuItem jmiDeslogar;
+    private javax.swing.JMenuItem jmiLeagueOfLegends;
+    private javax.swing.JMenuItem jmiMeusDados;
+    private javax.swing.JMenuItem jmiRocketLeague;
     // End of variables declaration//GEN-END:variables
 }

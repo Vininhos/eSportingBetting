@@ -31,18 +31,57 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Apostas"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiRocketLeague">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rocket League"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiRocketLeagueActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiLeagueOfLegends">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="League of Legends"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiLeagueOfLegendsActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="text" type="java.lang.String" value="Op&#xe7;&#xf5;es"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiMeusDados">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Meus dados"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiMeusDadosActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiDeslogar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deslogar"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiAdicionarFundos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alimentar Capitalismo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAdicionarFundosActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jmSaldoAtual">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Saldo atual: 0,00"/>
+          </Properties>
         </Menu>
       </SubComponents>
     </Menu>
