@@ -9,8 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class ApostaDoDiaLoL extends javax.swing.JFrame {
@@ -22,7 +20,6 @@ public class ApostaDoDiaLoL extends javax.swing.JFrame {
         DirectoryStream<Path> diretorio;
         try {
             diretorio = Files.newDirectoryStream(caminho);
-
             arrayListaTimes = new ArrayList();
             for (Path file : diretorio) {
                 System.out.println(file.toAbsolutePath());
@@ -104,6 +101,7 @@ public class ApostaDoDiaLoL extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aposta do dia - League Of Legends");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("APOSTA DO DIA - LEAGUE OF LEGENDS");

@@ -4,25 +4,9 @@ import java.io.IOException;
 
 public class FrameMenuPrincipal extends javax.swing.JFrame {
 
-    public void abrirTelaLogin() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    TelaLogin telaLogin = new TelaLogin();
-                    telaLogin.setVisible(true);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     public FrameMenuPrincipal() {
         initComponents();
         setLocationRelativeTo(this);
-        abrirTelaLogin();
     }
 
     /**
@@ -51,6 +35,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("eSportingBetting");
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ROCKET-LEAGUE-DESTACADA-1-900x503.jpg"))); // NOI18N
 

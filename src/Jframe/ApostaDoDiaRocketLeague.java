@@ -49,7 +49,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         String timeSorteado2 = arrayListaTimes.get(geradorNumeroAleatorio.nextInt(arrayListaTimes.size()));
         timeAtual = new File(timeSorteado2);
         nomeTimeAtual2 = timeAtual.getName().replace(".png", "");
-        jlApostaTime2.setText(jlApostaTime2.getText().concat(" " + nomeTimeAtual + ":"));
+        jlApostaTime2.setText(jlApostaTime2.getText().concat(" " + nomeTimeAtual2 + ":"));
         imagemTimes = new ImageIcon(timeSorteado2);
         jlTime2.setIcon(imagemTimes);
     }
@@ -59,7 +59,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    for (int i = 5; i > -1; i--) {
+                    for (int i = 4; i > -1; i--) {
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
                     }
@@ -78,7 +78,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             public void run() {
                 try {
                     int contadorEvento = 0;
-                    for (int i = 29; i > -1; i--) {
+                    for (int i = 30; i > -1; i--) {
                         contadorEvento += 1;
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
@@ -87,6 +87,8 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                             contadorEvento = 0;
                         }
                     }
+                    tocaSomFimPartida();
+                    verificaVencedorEPerdedor();
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -119,6 +121,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             String timeConcretizado;
             int numero = geradorNumeroAleatorio.nextInt(2);
             System.out.println(numero);
+            
             if (numero == 0) {
                 timeConcretizado = nomeTimeAtual;
             } else {
@@ -135,10 +138,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 partidaTempoReal.setaPartidaTempoReal("O jogador do time da " + timeConcretizado + " defendeu o seu gol");
             }
             if (nomeSomAtual.equals("epicsave1")) {
-                partidaTempoReal.setaPartidaTempoReal("QUE DEFESA INCRÍVEL DO JOGADOR DA " + timeConcretizado);
+                partidaTempoReal.setaPartidaTempoReal("QUE DEFESA INCRÍVEL DO JOGADOR DA " + timeConcretizado + "!");
             }
             if (nomeSomAtual.equals("epicsave2")) {
-                partidaTempoReal.setaPartidaTempoReal("DEFESA FANTÁSTICA DO TIME DA" + timeConcretizado);
+                partidaTempoReal.setaPartidaTempoReal("DEFESA FANTÁSTICA DO TIME DA " + timeConcretizado + "!");
             }
             if (nomeSomAtual.equals("goal1")) {
                 partidaTempoReal.setaPartidaTempoReal("O time " + timeConcretizado + " fez uma otima jogada com um belo gol!");
@@ -153,7 +156,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 }
             }
             if (nomeSomAtual.equals("goal2")) {
-                partidaTempoReal.setaPartidaTempoReal("QUE GOLAÇO DO TIME DA " + timeConcretizado);
+                partidaTempoReal.setaPartidaTempoReal("QUE GOLAÇO DO TIME DA " + timeConcretizado + "!");
                 if (timeConcretizado == nomeTimeAtual) {
                     int placarAtual = Integer.parseInt(jlPlacarTime1.getText());
                     placarAtual++;
@@ -186,12 +189,46 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
     }
 
+    private void tocaSomFimPartida() {
+        try {
+            FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\endgame.mp3");
+            Player tocador = new Player(arquivoInputStream);
+            tocador.play();
+        } catch (IOException | JavaLayerException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void iniciaPartida() {
         jlEstadoPartida.setText("A PARTIDA INICIOU E TERMINA EM:");
         jlTempoPartida.setText("30");
         partidaTempoReal.setVisible(true);
         partidaTempoReal.setaNomeTime1(nomeTimeAtual);
         partidaTempoReal.setaNomeTime2(nomeTimeAtual2);
+    }
+
+    private void verificaVencedorEPerdedor() {
+        int golsTime1 = Integer.parseInt(jlPlacarTime1.getText());
+        int golsTime2 = Integer.parseInt(jlPlacarTime2.getText());
+        if (golsTime1 == golsTime2) {
+            jlFimPartidaTime1.setText("EMPATE");
+            jlFimPartidaTime1.setForeground(Color.yellow);
+            jlFimPartidaTime2.setText("EMPATE");
+            jlFimPartidaTime2.setForeground(Color.yellow);
+            partidaTempoReal.setaPartidaTempoReal("O RESULTADO FOI UM EMPATE!");
+        } else if (golsTime1 > golsTime2) {
+            jlFimPartidaTime1.setText("VITÓRIA");
+            jlFimPartidaTime1.setForeground(Color.green);
+            jlFimPartidaTime2.setText("DERROTA");
+            jlFimPartidaTime2.setForeground(Color.red);
+            partidaTempoReal.setaPartidaTempoReal("QUE BELA VITÓRIA DA " + nomeTimeAtual);
+        } else {
+            jlFimPartidaTime1.setText("DERROTA");
+            jlFimPartidaTime1.setForeground(Color.red);
+            jlFimPartidaTime2.setText("VITÓRIA");
+            jlFimPartidaTime2.setForeground(Color.green);
+            partidaTempoReal.setaPartidaTempoReal("NOSSO VENCEDOR É O TIME DA " + nomeTimeAtual2);
+        }
     }
 
     /**
@@ -229,9 +266,12 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jlTempoPartida = new javax.swing.JLabel();
         jlPlacarTime2 = new javax.swing.JLabel();
         jlPlacarTime1 = new javax.swing.JLabel();
+        jlFimPartidaTime1 = new javax.swing.JLabel();
+        jlFimPartidaTime2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aposta do dia - Rocket League");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("APOSTA DO DIA - ROCKET LEAGUE");
@@ -261,13 +301,17 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jlEstadoPartida.setText("Tempo antes da partida começar:");
 
         jlTempoPartida.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlTempoPartida.setText("20");
+        jlTempoPartida.setText("5");
 
         jlPlacarTime2.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jlPlacarTime2.setText("0");
 
         jlPlacarTime1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jlPlacarTime1.setText("0");
+
+        jlFimPartidaTime1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jlFimPartidaTime2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -289,15 +333,15 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlPlacarTime1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtApostaTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
                                 .addComponent(jlApostaTime2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jbApostarTime2)))
+                                .addComponent(jbApostarTime2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlPlacarTime1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -318,6 +362,12 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 .addGap(110, 110, 110)
                 .addComponent(jlTime2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(jlFimPartidaTime1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlFimPartidaTime2)
+                .addGap(121, 121, 121))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtApostaTime1, jtApostaTime2});
@@ -337,29 +387,29 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jlTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlApostaTime1)
-                            .addComponent(jlApostaTime2)
-                            .addComponent(jtApostaTime1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtApostaTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbApostarTime1)
-                            .addComponent(jbApostarTime2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlEstadoPartida)
-                            .addComponent(jlTempoPartida))
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlPlacarTime2)
-                            .addComponent(jlPlacarTime1))
-                        .addGap(295, 295, 295))))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlPlacarTime2)
+                    .addComponent(jlPlacarTime1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlFimPartidaTime1)
+                    .addComponent(jlFimPartidaTime2))
+                .addGap(61, 61, 61)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlApostaTime1)
+                    .addComponent(jlApostaTime2)
+                    .addComponent(jtApostaTime1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtApostaTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbApostarTime1)
+                    .addComponent(jbApostarTime2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlEstadoPartida)
+                    .addComponent(jlTempoPartida))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -425,6 +475,8 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     private javax.swing.JLabel jlApostaTime1;
     private javax.swing.JLabel jlApostaTime2;
     private javax.swing.JLabel jlEstadoPartida;
+    private javax.swing.JLabel jlFimPartidaTime1;
+    private javax.swing.JLabel jlFimPartidaTime2;
     private javax.swing.JLabel jlPlacarTime1;
     private javax.swing.JLabel jlPlacarTime2;
     private javax.swing.JLabel jlTempoPartida;

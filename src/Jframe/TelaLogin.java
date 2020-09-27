@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 public class TelaLogin extends javax.swing.JFrame {
 
+
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(this);
@@ -41,6 +42,11 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3.setText("Senha:");
 
         jbLogar.setText("Logar");
+        jbLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLogarActionPerformed(evt);
+            }
+        });
 
         jbSair.setText("Sair");
         jbSair.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +146,15 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jbSairActionPerformed
+
+    private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
+        if (jtUsuario.getText().equals("cu") && jpfSenha.getText().equals("cu")) {
+            dispose();
+            FrameMenuPrincipal frame = new FrameMenuPrincipal();
+            frame.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Você logou com sucesso!");
+        }
+    }//GEN-LAST:event_jbLogarActionPerformed
 
     /**
      * @param args the command line arguments

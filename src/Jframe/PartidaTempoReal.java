@@ -1,5 +1,7 @@
 package Jframe;
 
+import java.awt.Color;
+
 public class PartidaTempoReal extends javax.swing.JFrame {
 
     /**
@@ -8,6 +10,7 @@ public class PartidaTempoReal extends javax.swing.JFrame {
     public PartidaTempoReal() {
         initComponents();
         setLocationRelativeTo(this);
+        getContentPane().setBackground(Color.orange);
     }
 
     public void setaPartidaTempoReal(String acontecimento) {
@@ -38,6 +41,7 @@ public void setaNomeTime2(String time2){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Partida em tempo real");
+        setResizable(false);
 
         jlTime1.setText("Time1");
 
@@ -48,7 +52,6 @@ public void setaNomeTime2(String time2){
         jtaPartida.setEditable(false);
         jtaPartida.setColumns(20);
         jtaPartida.setRows(5);
-        jtaPartida.setEnabled(false);
         jScrollPane1.setViewportView(jtaPartida);
 
         jbFechar.setText("Fechar");
