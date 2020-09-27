@@ -149,19 +149,13 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiCadAdminActionPerformed
 
     private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
-        ApostaDoDiaRocketLeague frameRocketLeague;
-       
-            frameRocketLeague = new ApostaDoDiaRocketLeague();
-            frameRocketLeague.setVisible(true);
-      
-
+        ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
+        frameRocketLeague.setVisible(true);
     }//GEN-LAST:event_jmiRocketLeagueActionPerformed
 
     private void jmiLeagueOfLegendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLeagueOfLegendsActionPerformed
         ApostaDoDiaLoL frameLoL = new ApostaDoDiaLoL();
-            frameLoL.setVisible(true);
-  
-
+        frameLoL.setVisible(true);
     }//GEN-LAST:event_jmiLeagueOfLegendsActionPerformed
 
     private void jmiMeusDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMeusDadosActionPerformed
