@@ -2,6 +2,7 @@ package Class;
 
 import java.io.Serializable;
 
+//Clase do Administrador.s
 public class Administrador extends Usuario implements InterfacePessoa, Serializable {
 
     int idAdmin;
@@ -18,7 +19,7 @@ public class Administrador extends Usuario implements InterfacePessoa, Serializa
 
     @Override
     public String leDados() {
-       return toString();
+        return toString();
     }
 
     @Override

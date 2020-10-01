@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Class;
 
-/**
- *
- * @author vinni
- */
+//Interface com um método leDados, printando na tela todos os dados do cliente
+//ou usuário.
 public interface InterfacePessoa {
     public String leDados();
 }

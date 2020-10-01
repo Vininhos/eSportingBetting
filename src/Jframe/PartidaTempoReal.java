@@ -4,24 +4,28 @@ import java.awt.Color;
 
 public class PartidaTempoReal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PartidaTempoReal
-     */
     public PartidaTempoReal() {
         initComponents();
         setLocationRelativeTo(this);
+        //Pinta o frame com a cor laranja.
         getContentPane().setBackground(Color.orange);
     }
 
+    //Método utilizado para enviar mensagens para a área de texto, vindo do 
+    //ApostaRocketLeagueFrame.
     public void setaPartidaTempoReal(String acontecimento) {
         jtaPartida.setText(jtaPartida.getText() + "\n\n" + acontecimento);
     }
-public void setaNomeTime1(String time1){
-    jlTime1.setText(time1);
-}
-public void setaNomeTime2(String time2){
-    jlTime2.setText(time2);
-}
+
+    //Métodos para setar o nome dos times.
+    public void setaNomeTime1(String time1) {
+        jlTime1.setText(time1);
+    }
+
+    public void setaNomeTime2(String time2) {
+        jlTime2.setText(time2);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

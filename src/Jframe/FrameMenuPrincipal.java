@@ -138,7 +138,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jmSaldoAtual.setText("0");
+        jmSaldoAtual.setText("5");
         jMenuBar1.add(jmSaldoAtual);
 
         setJMenuBar(jMenuBar1);
@@ -182,6 +182,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmSaldoAtual.setText("99999999");
     }//GEN-LAST:event_jmiGerarFundosActionPerformed
 
+    //Método responsável por atualizar o saldo no menu principal.
     private void jmiAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizarActionPerformed
         int saldoAtual = Integer.parseInt(jmSaldoAtual.getText());
         saldoNovo = saldoAtual + (frameAdicionarFundos.pegaValorFundosAtual()
@@ -190,6 +191,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         saldoNovo = 0;
         valorFundoAtual = 0;
     }//GEN-LAST:event_jmiAtualizarActionPerformed
+    
+    //Muda o nome do usuário no menu para o que foi cadastrado.
     public void mudaNomeUsuario(String usuario) {
         jmUsuario.setText(usuario);
     }

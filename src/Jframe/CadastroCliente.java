@@ -226,6 +226,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
 
+    //Método responsável por serializar o cadastro do cliente.
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
 
         try {

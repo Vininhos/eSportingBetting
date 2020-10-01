@@ -1,5 +1,6 @@
 package Class;
 
+//Classe abstrata do usuário, sendo utilizada para a classe Cliente e Administrador.
 public abstract class Usuario {
 
     String nome;

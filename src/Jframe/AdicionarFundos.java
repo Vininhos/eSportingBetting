@@ -14,11 +14,12 @@ public class AdicionarFundos extends javax.swing.JFrame {
     int valorAtual = 0;
     int aux = 0;
 
+    //Método que será utilizado pelo menu principal para pegar valor novo que
+    //o cliente adicionou.
     public int pegaValorFundosAtual() {
         aux = valorAtual;
         valorAtual = 0;
         return aux;
-
     }
 
     /**

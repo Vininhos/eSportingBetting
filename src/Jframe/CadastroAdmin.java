@@ -19,6 +19,7 @@ public class CadastroAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(this);
     }
 
+    //Método que apaga campos.
     private void apagaCampos() {
         jtUsuario.setText("");
         jtAno.setText("");
@@ -224,7 +225,7 @@ public class CadastroAdmin extends javax.swing.JFrame {
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
-
+    //Método responsável por serializar o cadastro do cliente.
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         try {
             Random random = new Random();

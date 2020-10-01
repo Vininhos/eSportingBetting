@@ -2,6 +2,7 @@ package Class;
 
 import java.io.Serializable;
 
+//Classe do cliente.
 public class Cliente extends Usuario implements InterfacePessoa, Serializable {
 
     int idCliente;
