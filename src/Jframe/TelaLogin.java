@@ -95,11 +95,39 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
     //Realiza o login do usuário e seta o nome no menu principal.
     private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
-        dispose();
-        frameMenu.setVisible(true);
-        frameMenu.mudaNomeUsuario("Usuario atual: " + jtUsuario.getText());
-        JOptionPane.showMessageDialog(this, "Bem-vindo, "
-                + jtUsuario.getText() + ". Você logou com sucesso!");
+
+        if (jtUsuario.getText().length() < 0 || jtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, digite um nome de usuário válido.");
+
+        } else {
+            
+            dispose();
+            frameMenu.setVisible(true);
+            frameMenu.mudaNomeUsuario("Usuario atual: " + jtUsuario.getText());
+            JOptionPane.showMessageDialog(this, "Bem-vindo, "
+                    + jtUsuario.getText() + ". Você logou com sucesso!");
+            CadastroCliente cadCliente;
+            int escolha = JOptionPane.showConfirmDialog(this, "Você deseja se cadastrar como cliente?", "Cadastro", 0);
+
+            if (escolha == 0) {
+                cadCliente = new CadastroCliente();
+                cadCliente.setVisible(true);
+                
+            } else if (escolha == 1) {
+                String comparador = JOptionPane.showInputDialog(
+                        "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: Flyps é cansado)");
+                if (comparador.equalsIgnoreCase("Flyps é cansado")) {
+                    CadastroAdmin cadAdmin = new CadastroAdmin();
+                    cadAdmin.setVisible(true);
+                    
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "Você ainda não está preparado...");
+                    cadCliente = new CadastroCliente();
+                    cadCliente.setVisible(true);
+                }
+            }
+        }
     }//GEN-LAST:event_jbLogarActionPerformed
 
     /**

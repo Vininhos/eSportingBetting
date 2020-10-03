@@ -176,14 +176,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtNome">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="teste"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtEmail">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="teste"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jcbGenero">
       <Properties>
@@ -215,9 +209,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtMes">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="10"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -228,9 +219,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtDia">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="03"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
@@ -241,9 +229,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtAno">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="1999"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbFechar">
       <Properties>
@@ -278,14 +263,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jpfSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="teste"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtUsuario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="teste"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>

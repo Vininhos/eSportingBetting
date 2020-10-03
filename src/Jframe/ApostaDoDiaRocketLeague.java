@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -47,6 +48,15 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }
     }
 
+    //Método simples que desativa os campos desse JFrame.
+    private void desativaCampos(){
+        jtApostaTime1.setEnabled(false);
+        jtApostaTime2.setEnabled(false);
+        jtApostaTime1.setText("");
+        jtApostaTime2.setText("");
+        jbApostarTime1.setEnabled(false);
+        jbApostarTime2.setEnabled(false);
+    }
     /*Método responsável por gerar aleatoriamente os times que estão no arraylist
     e por colocar as imagens dos mesmos no jframe.*/
     private void geraApostaDia() {
@@ -77,7 +87,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             public void run() {
                 try {
                     saldoAtual = Integer.parseInt(jlSaldoAtual.getText());
-                    for (int i = 4; i > -1; i--) {
+                    for (int i = 14; i > -1; i--) {
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
                     }
@@ -100,7 +110,8 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 try {
                     //Contador utilizado para pegar 0 segundo 5, gerando uma ação aleatória na partida.
                     int contadorEvento = 0;
-                    for (int i = 30; i > -1; i--) {
+                    desativaCampos();
+                    for (int i = 35; i > -1; i--) {
                         contadorEvento += 1;
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
@@ -150,6 +161,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
             if (numero == 0) {
                 timeConcretizado = nomeTimeAtual;
+
             } else {
                 timeConcretizado = nomeTimeAtual2;
             }
@@ -174,11 +186,14 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             //Caso o som e ação seja de um gol, seta placar também.
             if (nomeSomAtual.equals("goal1")) {
                 partidaTempoReal.setaPartidaTempoReal("O time " + timeConcretizado + " fez uma otima jogada com um belo gol!");
+
                 if (timeConcretizado == nomeTimeAtual) {
                     int placarAtual = Integer.parseInt(jlPlacarTime1.getText());
                     placarAtual++;
                     jlPlacarTime1.setText(placarAtual + "");
+
                 } else {
+
                     int placarAtual = Integer.parseInt(jlPlacarTime2.getText());
                     placarAtual++;
                     jlPlacarTime2.setText(placarAtual + "");
@@ -188,10 +203,12 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             //Caso o som e ação seja de um gol, seta placar também.
             if (nomeSomAtual.equals("goal2")) {
                 partidaTempoReal.setaPartidaTempoReal("QUE GOLAÇO DO TIME DA " + timeConcretizado + "!");
+
                 if (timeConcretizado == nomeTimeAtual) {
                     int placarAtual = Integer.parseInt(jlPlacarTime1.getText());
                     placarAtual++;
                     jlPlacarTime1.setText(placarAtual + "");
+
                 } else {
                     int placarAtual = Integer.parseInt(jlPlacarTime2.getText());
                     placarAtual++;
@@ -212,7 +229,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     jlPlacarTime2.setText(placarAtual + "");
                 }
             }
-            
+
             //Toca o som sorteado.
             Player tocador = new Player(arquivoInputStream);
             tocador.play();
@@ -248,34 +265,39 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     private void verificaVencedorEPerdedor() {
         int golsTime1 = Integer.parseInt(jlPlacarTime1.getText());
         int golsTime2 = Integer.parseInt(jlPlacarTime2.getText());
+
         if (golsTime1 == golsTime2) {
             jlFimPartidaTime1.setText("EMPATE");
             jlFimPartidaTime1.setForeground(Color.yellow);
             jlFimPartidaTime2.setText("EMPATE");
             jlFimPartidaTime2.setForeground(Color.yellow);
             partidaTempoReal.setaPartidaTempoReal("O RESULTADO FOI UM EMPATE!");
+
             if (timeApostado == "time1" || timeApostado == "time2") {
                 saldoAtual = saldoAtual + saldoApostado;
                 setaSaldoAtual(saldoAtual + "");
             }
+
         } else if (golsTime1 > golsTime2) {
             jlFimPartidaTime1.setText("VITÓRIA");
             jlFimPartidaTime1.setForeground(Color.green);
             jlFimPartidaTime2.setText("DERROTA");
             jlFimPartidaTime2.setForeground(Color.red);
-            partidaTempoReal.setaPartidaTempoReal("QUE BELA VITÓRIA DA " + nomeTimeAtual);
+            partidaTempoReal.setaPartidaTempoReal("QUE BELA VITÓRIA DA " + nomeTimeAtual + "!");
+
             if (timeApostado == "time1") {
-                saldoAtual += (saldoApostado * 2);
+                saldoAtual += (saldoApostado * 4);
                 setaSaldoAtual(saldoAtual + "");
             }
         } else {
+
             jlFimPartidaTime1.setText("DERROTA");
             jlFimPartidaTime1.setForeground(Color.red);
             jlFimPartidaTime2.setText("VITÓRIA");
             jlFimPartidaTime2.setForeground(Color.green);
-            partidaTempoReal.setaPartidaTempoReal("NOSSO VENCEDOR É O TIME DA " + nomeTimeAtual2);
+            partidaTempoReal.setaPartidaTempoReal("NOSSO VENCEDOR É O TIME DA " + nomeTimeAtual2 + "!");
             if (timeApostado == "time2") {
-                saldoAtual += (saldoApostado * 2);
+                saldoAtual += (saldoApostado * 4);
                 setaSaldoAtual(saldoAtual + "");
             }
         }
@@ -362,7 +384,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jlEstadoPartida.setText("Tempo antes da partida começar:");
 
         jlTempoPartida.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlTempoPartida.setText("5");
+        jlTempoPartida.setText("15");
 
         jlPlacarTime2.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jlPlacarTime2.setText("0");
@@ -376,7 +398,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
         jLabel3.setText("Saldo atual:");
 
-        jlSaldoAtual.setText("500");
+        jlSaldoAtual.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -404,7 +426,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtApostaTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jlApostaTime2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -489,30 +511,42 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
     //Botão que realiza as operações caso o usuário aposte no time 1.
     private void jbApostarTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApostarTime1ActionPerformed
-        jtApostaTime1.setEnabled(false);
-        saldoApostado = Integer.parseInt(jtApostaTime1.getText());
-        jtApostaTime1.setText("");
-        jtApostaTime2.setText("");
-        jtApostaTime2.setEnabled(false);
-        jbApostarTime1.setEnabled(false);
-        jbApostarTime2.setEnabled(false);
-        timeApostado = "time1";
-        setaSaldoAtual(((Integer.parseInt(jlSaldoAtual.getText())) - saldoApostado) + "");
-        saldoAtual += saldoApostado;
+        if (Integer.parseInt(jlSaldoAtual.getText()) < Integer.parseInt(jtApostaTime1.getText())) {
+            JOptionPane.showMessageDialog(this, "Aposte um valor válido.");
+
+        } else {
+
+            jtApostaTime1.setEnabled(false);
+            saldoApostado = Integer.parseInt(jtApostaTime1.getText());
+            jtApostaTime1.setText("");
+            jtApostaTime2.setText("");
+            jtApostaTime2.setEnabled(false);
+            jbApostarTime1.setEnabled(false);
+            jbApostarTime2.setEnabled(false);
+            timeApostado = "time1";
+            setaSaldoAtual(((Integer.parseInt(jlSaldoAtual.getText())) - saldoApostado) + "");
+            saldoAtual += saldoApostado;
+        }
     }//GEN-LAST:event_jbApostarTime1ActionPerformed
 
     //Botão que realiza as operações caso o usuário aposte no time 1.
     private void jbApostarTime2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApostarTime2ActionPerformed
-        jtApostaTime1.setEnabled(false);
-        saldoApostado = Integer.parseInt(jtApostaTime2.getText());
-        jtApostaTime1.setText("");
-        jtApostaTime2.setText("");
-        jtApostaTime2.setEnabled(false);
-        jbApostarTime1.setEnabled(false);
-        jbApostarTime2.setEnabled(false);
-        timeApostado = "time2";
-        setaSaldoAtual((Integer.parseInt(jlSaldoAtual.getText()) - saldoApostado) + "");
-        saldoAtual += saldoApostado;
+        if (Integer.parseInt(jlSaldoAtual.getText()) < Integer.parseInt(jtApostaTime2.getText())) {
+            JOptionPane.showMessageDialog(this, "Aposte um valor válido.");
+
+        } else {
+
+            jtApostaTime1.setEnabled(false);
+            saldoApostado = Integer.parseInt(jtApostaTime2.getText());
+            jtApostaTime1.setText("");
+            jtApostaTime2.setText("");
+            jtApostaTime2.setEnabled(false);
+            jbApostarTime1.setEnabled(false);
+            jbApostarTime2.setEnabled(false);
+            timeApostado = "time2";
+            setaSaldoAtual((Integer.parseInt(jlSaldoAtual.getText()) - saldoApostado) + "");
+            saldoAtual += saldoApostado;
+        }
     }//GEN-LAST:event_jbApostarTime2ActionPerformed
 
     /**

@@ -50,7 +50,35 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel2.setText("Número do Cartão:");
 
+        jtNumeroCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtNumeroCartaoActionPerformed(evt);
+            }
+        });
+        jtNumeroCartao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtNumeroCartaoKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Código verificador:");
+
+        jtCodVerificador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtCodVerificadorActionPerformed(evt);
+            }
+        });
+        jtCodVerificador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtCodVerificadorKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtCodVerificadorKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtCodVerificadorKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Valor:");
 
@@ -127,10 +155,55 @@ public class AdicionarFundos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
 
+    //Método que adiciona fundos, fazendo certas verificações nos campos.
     private void jbAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarFundosActionPerformed
-        JOptionPane.showMessageDialog(this, "fundos adicionados com sucesso!");
-        valorAtual = Integer.parseInt(jtValor.getText());
+
+        if (jtNumeroCartao.getText().length() < 16 || jtNumeroCartao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite 16 números para o número do cartão.");
+
+        } else if (jtCodVerificador.getText().length() < 3 || jtCodVerificador.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite 3 números para o código verificador.");
+
+        } else if (jtValor.getText().isEmpty() || Integer.parseInt(jtValor.getText()) == 0) {
+            JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!");
+            valorAtual = Integer.parseInt(jtValor.getText());
+            dispose();
+        }
     }//GEN-LAST:event_jbAdicionarFundosActionPerformed
+
+    private void jtCodVerificadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtCodVerificadorActionPerformed
+
+    }//GEN-LAST:event_jtCodVerificadorActionPerformed
+
+    private void jtNumeroCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNumeroCartaoActionPerformed
+
+    }//GEN-LAST:event_jtNumeroCartaoActionPerformed
+
+    private void jtCodVerificadorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCodVerificadorKeyPressed
+
+    }//GEN-LAST:event_jtCodVerificadorKeyPressed
+
+    private void jtCodVerificadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCodVerificadorKeyTyped
+
+    }//GEN-LAST:event_jtCodVerificadorKeyTyped
+
+    //Verificação da quantidade de caracteres nos campos através de evento.
+    private void jtCodVerificadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCodVerificadorKeyReleased
+        if (jtCodVerificador.getText().length() > 3) {
+            JOptionPane.showMessageDialog(this, "Digite apenas 3 números para o código verificador.");
+            jtCodVerificador.setText("");
+        }
+    }//GEN-LAST:event_jtCodVerificadorKeyReleased
+    //Verificação da quantidade de caracteres nos campos através de evento.
+    private void jtNumeroCartaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNumeroCartaoKeyReleased
+        if (jtNumeroCartao.getText().length() > 16) {
+            JOptionPane.showMessageDialog(this, "Digite apenas 16 números para o número do cartão.");
+            jtNumeroCartao.setText("");
+        }
+    }//GEN-LAST:event_jtNumeroCartaoKeyReleased
 
     /**
      * @param args the command line arguments

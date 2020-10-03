@@ -56,10 +56,13 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deslogar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiDeslogarActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiAdicionarFundos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alimentar Capitalismo"/>
+                <Property name="text" type="java.lang.String" value="Adicionar Dinheiros"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAdicionarFundosActionPerformed"/>
@@ -71,6 +74,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarFundosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiAtualizar2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Atualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAtualizar2ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

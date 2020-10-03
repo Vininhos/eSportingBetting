@@ -63,10 +63,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Nome:");
 
-        jtNome.setText("teste");
-
-        jtEmail.setText("teste");
-
         jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
@@ -75,17 +71,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Dia:");
 
-        jtMes.setText("10");
-
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Mês");
 
-        jtDia.setText("03");
-
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Ano:");
-
-        jtAno.setText("1999");
 
         jbFechar.setText("Fechar");
         jbFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,10 +96,6 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Usuário:");
-
-        jpfSenha.setText("teste");
-
-        jtUsuario.setText("teste");
 
         jLabel11.setText("CPF:");
 
@@ -246,11 +232,12 @@ public class CadastroCliente extends javax.swing.JFrame {
                     jtEmail.getText(), jtCPF.getText(),
                     jcbGenero.getSelectedItem().toString());
 
+            cliente.leDados();
             arrayCliente.add(cliente);
             ObjectOutputStream objStream = new ObjectOutputStream(new FileOutputStream(arquivo));
             objStream.writeObject(arrayCliente);
             objStream.close();
-            JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(this, "Cliente cadastrado e serializado com sucesso!");
             dispose();
         } catch (Exception ex) {
             ex.printStackTrace();

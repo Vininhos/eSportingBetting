@@ -246,11 +246,13 @@ public class CadastroAdmin extends javax.swing.JFrame {
                     jtEmail.getText(),
                     jtCPF.getText(),
                     jcbGenero.getSelectedItem().toString());
+
+            admin.leDados();
             arrayAdmin.add(admin);
             ObjectOutputStream objStream = new ObjectOutputStream(new FileOutputStream(arquivo));
             objStream.writeObject(arrayAdmin);
             objStream.close();
-            JOptionPane.showMessageDialog(this, "Admin cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(this, "Admin cadastrado e serializado com sucesso!");
             apagaCampos();
         } catch (Exception ex) {
             ex.printStackTrace();

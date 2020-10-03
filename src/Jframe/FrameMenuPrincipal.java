@@ -1,5 +1,7 @@
 package Jframe;
 
+import javax.swing.JOptionPane;
+
 public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     public FrameMenuPrincipal() {
@@ -38,6 +40,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmiDeslogar = new javax.swing.JMenuItem();
         jmiAdicionarFundos = new javax.swing.JMenuItem();
         jmiGerarFundos = new javax.swing.JMenuItem();
+        jmiAtualizar2 = new javax.swing.JMenuItem();
         jmUsuario = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmiAtualizar = new javax.swing.JMenuItem();
@@ -103,9 +106,14 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Opções");
 
         jmiDeslogar.setText("Deslogar");
+        jmiDeslogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDeslogarActionPerformed(evt);
+            }
+        });
         jMenu3.add(jmiDeslogar);
 
-        jmiAdicionarFundos.setText("Alimentar Capitalismo");
+        jmiAdicionarFundos.setText("Adicionar Dinheiros");
         jmiAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiAdicionarFundosActionPerformed(evt);
@@ -120,6 +128,14 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jmiGerarFundos);
+
+        jmiAtualizar2.setText("Atualizar");
+        jmiAtualizar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAtualizar2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiAtualizar2);
 
         jMenuBar1.add(jMenu3);
 
@@ -163,8 +179,14 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiCadClienteActionPerformed
 
     private void jmiCadAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadAdminActionPerformed
-        CadastroAdmin cadAdmin = new CadastroAdmin();
-        cadAdmin.setVisible(true);
+        String comparador = JOptionPane.showInputDialog(
+                "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: Flyps é cansado)");
+        if (comparador.equalsIgnoreCase("Flyps é cansado")) {
+            CadastroAdmin cadAdmin = new CadastroAdmin();
+            cadAdmin.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "ERROOOOOOOOU!");
+        }
     }//GEN-LAST:event_jmiCadAdminActionPerformed
 
     private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
@@ -191,7 +213,22 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         saldoNovo = 0;
         valorFundoAtual = 0;
     }//GEN-LAST:event_jmiAtualizarActionPerformed
-    
+
+    private void jmiDeslogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDeslogarActionPerformed
+        dispose();
+        TelaLogin frameLogin = new TelaLogin();
+        frameLogin.setVisible(true);
+    }//GEN-LAST:event_jmiDeslogarActionPerformed
+
+    private void jmiAtualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizar2ActionPerformed
+        int saldoAtual = Integer.parseInt(jmSaldoAtual.getText());
+        saldoNovo = saldoAtual + (frameAdicionarFundos.pegaValorFundosAtual()
+                + frameRocketLeague.atualizaFundos());
+        jmSaldoAtual.setText(saldoNovo + "");
+        saldoNovo = 0;
+        valorFundoAtual = 0;
+    }//GEN-LAST:event_jmiAtualizar2ActionPerformed
+
     //Muda o nome do usuário no menu para o que foi cadastrado.
     public void mudaNomeUsuario(String usuario) {
         jmUsuario.setText(usuario);
@@ -245,6 +282,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jmUsuario;
     private javax.swing.JMenuItem jmiAdicionarFundos;
     private javax.swing.JMenuItem jmiAtualizar;
+    private javax.swing.JMenuItem jmiAtualizar2;
     private javax.swing.JMenuItem jmiCadAdmin;
     private javax.swing.JMenuItem jmiCadCliente;
     private javax.swing.JMenuItem jmiDeslogar;
