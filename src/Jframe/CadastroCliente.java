@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.input.DataFormat;
 import javax.swing.JOptionPane;
 
 public class CadastroCliente extends javax.swing.JFrame {
@@ -52,7 +53,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastro de Clientes");
+        jLabel1.setText("Cadastro de Cliente");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Email:");
