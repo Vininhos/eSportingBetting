@@ -1,21 +1,19 @@
 package Class;
 
 //Classe abstrata do usuário, sendo utilizada para a classe Cliente e Administrador.
+import java.util.Date;
+
 public abstract class Usuario {
 
     String nome;
-    int diaNasc;
-    int mesNasc;
-    int anoNasc;
+    String dataNascimento;
     String email;
     String cpf;
     String genero;
 
-    public Usuario(String nome, int diaNasc, int mesNasc, int anoNasc, String email, String cpf, String genero) {
+    public Usuario(String nome, String dataNascimento, String email, String cpf, String genero) {
         this.nome = nome;
-        this.diaNasc = diaNasc;
-        this.mesNasc = mesNasc;
-        this.anoNasc = anoNasc;
+        this.dataNascimento = dataNascimento;
         this.email = email;
         this.cpf = cpf;
         this.genero = genero;
@@ -29,28 +27,12 @@ public abstract class Usuario {
         this.nome = nome;
     }
 
-    public int getDiaNasc() {
-        return diaNasc;
+    public String getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDiaNasc(int diaNasc) {
-        this.diaNasc = diaNasc;
-    }
-
-    public int getMesNasc() {
-        return mesNasc;
-    }
-
-    public void setMesNasc(int mesNasc) {
-        this.mesNasc = mesNasc;
-    }
-
-    public int getAnoNasc() {
-        return anoNasc;
-    }
-
-    public void setAnoNasc(int anoNasc) {
-        this.anoNasc = anoNasc;
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getEmail() {

@@ -103,6 +103,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtNumeroCartao">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1234567891234567"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtNumeroCartaoActionPerformed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtNumeroCartaoKeyReleased"/>
@@ -114,6 +117,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtCodVerificador">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="123"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtCodVerificadorActionPerformed"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtCodVerificadorKeyPressed"/>
@@ -127,6 +133,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtValor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="300"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbAdicionarFundos">
       <Properties>
