@@ -1,5 +1,6 @@
 package Jframe;
 
+import DAO.eSportBettingDAO;
 import javax.swing.JOptionPane;
 
 public class AdicionarFundos extends javax.swing.JFrame {
@@ -11,15 +12,31 @@ public class AdicionarFundos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
     }
-    int valorAtual = 0;
-    int aux = 0;
+    String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
     //Método que será utilizado pelo menu principal para pegar valor novo que
     //o cliente adicionou.
-    public int pegaValorFundosAtual() {
-        aux = valorAtual;
-        valorAtual = 0;
-        return aux;
+    public void adicionaValorFundosAtual(String usuario) {
+        if (jtNumeroCartao.getText().length() < 16 || jtNumeroCartao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite 16 números para o número do cartão.");
+
+        } else if (jtCodVerificador.getText().length() < 3 || jtCodVerificador.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite 3 números para o código verificador.");
+
+        } else if (jtValor.getText().isEmpty() || Integer.parseInt(jtValor.getText()) == 0) {
+            JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!");
+            float saldo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
+            saldo += Float.parseFloat(jtValor.getText());
+            eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldo);
+            dispose();
+        }
     }
 
     /**
@@ -50,6 +67,7 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel2.setText("Número do Cartão:");
 
+        jtNumeroCartao.setText("1234567891234567");
         jtNumeroCartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtNumeroCartaoActionPerformed(evt);
@@ -63,6 +81,7 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel3.setText("Código verificador:");
 
+        jtCodVerificador.setText("123");
         jtCodVerificador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtCodVerificadorActionPerformed(evt);
@@ -81,6 +100,8 @@ public class AdicionarFundos extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Valor:");
+
+        jtValor.setText("300");
 
         jbAdicionarFundos.setText("Alimentar o Capitalismo");
         jbAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
@@ -157,21 +178,8 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
     //Método que adiciona fundos, fazendo certas verificações nos campos.
     private void jbAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarFundosActionPerformed
+        adicionaValorFundosAtual(usuario);
 
-        if (jtNumeroCartao.getText().length() < 16 || jtNumeroCartao.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite 16 números para o número do cartão.");
-
-        } else if (jtCodVerificador.getText().length() < 3 || jtCodVerificador.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite 3 números para o código verificador.");
-
-        } else if (jtValor.getText().isEmpty() || Integer.parseInt(jtValor.getText()) == 0) {
-            JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor");
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!");
-            valorAtual = Integer.parseInt(jtValor.getText());
-            dispose();
-        }
     }//GEN-LAST:event_jbAdicionarFundosActionPerformed
 
     private void jtCodVerificadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtCodVerificadorActionPerformed

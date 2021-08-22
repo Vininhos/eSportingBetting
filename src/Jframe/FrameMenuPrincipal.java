@@ -1,21 +1,34 @@
 package Jframe;
 
+import Class.Administrador;
+import Class.Cliente;
+import DAO.eSportBettingDAO;
 import javax.swing.JOptionPane;
 
 public class FrameMenuPrincipal extends javax.swing.JFrame {
-
+    
     public FrameMenuPrincipal() {
         initComponents();
         setLocationRelativeTo(this);
         jmiGerarFundos.setVisible(false);
     }
-    int valorFundoAtual = 0;
-    int saldoNovo = 0;
-    AdicionarFundos frameAdicionarFundos = new AdicionarFundos();
+    float saldoNovo = 0;
+    String usuario;
     ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
-
+    
     public void ativaPrivilegiosAdministrador() {
         jmiGerarFundos.setVisible(true);
+    }
+    
+    public void carregarDadosUsuarioMenuPrincipal(Cliente cliente, Administrador admin) {
+        if (cliente != null) {
+            jmUsuario.setText(cliente.getNome());
+            jmSaldoAtual.setText(cliente.getSaldo() + "");
+            usuario = cliente.getUsuario();
+        } else {
+            jmUsuario.setText(admin.getNome());
+            ativaPrivilegiosAdministrador();
+        }
     }
 
     /**
@@ -60,9 +73,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,13 +202,21 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
         frameRocketLeague = new ApostaDoDiaRocketLeague();
-        frameRocketLeague.setaSaldoAtual(jmSaldoAtual.getText());
         frameRocketLeague.setVisible(true);
-        frameRocketLeague.iniciaComponentes();
+        frameRocketLeague.iniciarFuncionalidades();
+        float saldoCliente = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
+        if (saldoCliente != -1) {
+            frameRocketLeague.setaSaldoAtual(saldoCliente);
+        } else {
+            frameRocketLeague.setaSaldoAtual(0);
+        }
+        frameRocketLeague.setaUsuarioAtual(usuario);
     }//GEN-LAST:event_jmiRocketLeagueActionPerformed
 
     private void jmiAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAdicionarFundosActionPerformed
+        AdicionarFundos frameAdicionarFundos = new AdicionarFundos();
         frameAdicionarFundos.setVisible(true);
+        frameAdicionarFundos.setUsuario(usuario);
     }//GEN-LAST:event_jmiAdicionarFundosActionPerformed
 
     private void jmiGerarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarFundosActionPerformed
@@ -206,12 +225,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     //Método responsável por atualizar o saldo no menu principal.
     private void jmiAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizarActionPerformed
-        int saldoAtual = Integer.parseInt(jmSaldoAtual.getText());
-        saldoNovo = saldoAtual + (frameAdicionarFundos.pegaValorFundosAtual()
-                + frameRocketLeague.atualizaFundos());
+        saldoNovo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
         jmSaldoAtual.setText(saldoNovo + "");
-        saldoNovo = 0;
-        valorFundoAtual = 0;
     }//GEN-LAST:event_jmiAtualizarActionPerformed
 
     private void jmiDeslogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDeslogarActionPerformed
@@ -221,12 +236,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiDeslogarActionPerformed
 
     private void jmiAtualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizar2ActionPerformed
-        int saldoAtual = Integer.parseInt(jmSaldoAtual.getText());
-        saldoNovo = saldoAtual + (frameAdicionarFundos.pegaValorFundosAtual()
-                + frameRocketLeague.atualizaFundos());
+        saldoNovo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
         jmSaldoAtual.setText(saldoNovo + "");
-        saldoNovo = 0;
-        valorFundoAtual = 0;
     }//GEN-LAST:event_jmiAtualizar2ActionPerformed
 
     //Muda o nome do usuário no menu para o que foi cadastrado.
