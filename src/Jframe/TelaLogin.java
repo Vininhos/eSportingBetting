@@ -32,7 +32,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jbCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        setTitle("Bem-vindo ao eSportBetting");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Login - eSportBetting");
@@ -166,6 +166,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
             if (result != null) {
                 dispose();
+
                 if (jcbTipoUsuario.getSelectedItem().toString() == "Cliente") {
                     Cliente retCliente = eSportBettingDAO.getInstance().returnParametrosCliente(jtUsuario.getText(), jpfSenha.getText());
                     Cliente cliente = new Cliente(retCliente.getUsuario(),
@@ -179,7 +180,8 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
                     frameMenu.carregarDadosUsuarioMenuPrincipal(cliente, null);
 
                 } else {
-                    Administrador retAdmin = eSportBettingDAO.getInstance().returnParametrosAdministrador(jtUsuario.getText(), jpfSenha.getText());
+                    Administrador retAdmin = eSportBettingDAO.getInstance().returnParametrosAdministrador(jtUsuario.getText(),
+                            jpfSenha.getText());
                     Administrador admin = new Administrador(retAdmin.getUsuario(),
                             retAdmin.getSenha(),
                             retAdmin.getNome(),
@@ -218,13 +220,13 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
         } else if (escolha == 1) {
             String comparador = JOptionPane.showInputDialog(
-                    "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: Flyps é cansado)");
-            if (comparador.equalsIgnoreCase("Flyps é cansado")) {
+                    "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: deusnato)");
+
+            if (comparador.equalsIgnoreCase("deusnato")) {
                 CadastroAdmin cadAdmin = new CadastroAdmin();
                 cadAdmin.setVisible(true);
 
             } else {
-
                 JOptionPane.showMessageDialog(this, "Você ainda não está preparado...");
                 cadCliente = new CadastroCliente();
                 cadCliente.setVisible(true);
