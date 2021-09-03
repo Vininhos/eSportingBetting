@@ -6,7 +6,7 @@ import DAO.eSportBettingDAO;
 import javax.swing.JOptionPane;
 
 public class FrameMenuPrincipal extends javax.swing.JFrame {
-    
+
     public FrameMenuPrincipal() {
         initComponents();
         setLocationRelativeTo(this);
@@ -15,16 +15,17 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     float saldoNovo = 0;
     String usuario;
     ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
-    
+
     public void ativaPrivilegiosAdministrador() {
         jmiGerarFundos.setVisible(true);
     }
-    
+
     public void carregarDadosUsuarioMenuPrincipal(Cliente cliente, Administrador admin) {
         if (cliente != null) {
             jmUsuario.setText(cliente.getNome());
             jmSaldoAtual.setText(cliente.getSaldo() + "");
             usuario = cliente.getUsuario();
+            jmCadastros.setVisible(false);
         } else {
             jmUsuario.setText(admin.getNome());
             ativaPrivilegiosAdministrador();
@@ -44,20 +45,20 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jmiCadCliente = new javax.swing.JMenuItem();
-        jmiCadAdmin = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmiRocketLeague = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jmiDeslogar = new javax.swing.JMenuItem();
         jmiAdicionarFundos = new javax.swing.JMenuItem();
         jmiGerarFundos = new javax.swing.JMenuItem();
         jmiAtualizar2 = new javax.swing.JMenuItem();
+        jmiDeslogar = new javax.swing.JMenuItem();
         jmUsuario = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmiAtualizar = new javax.swing.JMenuItem();
         jmSaldoAtual = new javax.swing.JMenu();
+        jmCadastros = new javax.swing.JMenu();
+        jmiCadCliente = new javax.swing.JMenuItem();
+        jmiCadAdmin = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -82,26 +83,6 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Cadastros");
-
-        jmiCadCliente.setText("Cadastro de Cliente");
-        jmiCadCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiCadClienteActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jmiCadCliente);
-
-        jmiCadAdmin.setText("Cadastro de Admin");
-        jmiCadAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiCadAdminActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jmiCadAdmin);
-
-        jMenuBar1.add(jMenu1);
-
         jMenu2.setText("Apostas");
 
         jmiRocketLeague.setText("Rocket League");
@@ -115,14 +96,6 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Opções");
-
-        jmiDeslogar.setText("Deslogar");
-        jmiDeslogar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiDeslogarActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jmiDeslogar);
 
         jmiAdicionarFundos.setText("Adicionar Dinheiros");
         jmiAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
@@ -148,9 +121,17 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jmiAtualizar2);
 
+        jmiDeslogar.setText("Deslogar");
+        jmiDeslogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDeslogarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiDeslogar);
+
         jMenuBar1.add(jMenu3);
 
-        jmUsuario.setText("issovaisermodificado");
+        jmUsuario.setText("nomeusuario");
         jMenuBar1.add(jmUsuario);
 
         jMenu4.setText("Dinheiros:");
@@ -167,6 +148,26 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         jmSaldoAtual.setText("5");
         jMenuBar1.add(jmSaldoAtual);
+
+        jmCadastros.setText("Cadastros");
+
+        jmiCadCliente.setText("Cadastro de Cliente");
+        jmiCadCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCadClienteActionPerformed(evt);
+            }
+        });
+        jmCadastros.add(jmiCadCliente);
+
+        jmiCadAdmin.setText("Cadastro de Admin");
+        jmiCadAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCadAdminActionPerformed(evt);
+            }
+        });
+        jmCadastros.add(jmiCadAdmin);
+
+        jMenuBar1.add(jmCadastros);
 
         setJMenuBar(jMenuBar1);
 
@@ -204,13 +205,16 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         frameRocketLeague = new ApostaDoDiaRocketLeague();
         frameRocketLeague.setVisible(true);
         frameRocketLeague.iniciarFuncionalidades();
+
         float saldoCliente = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
+
         if (saldoCliente != -1) {
             frameRocketLeague.setaSaldoAtual(saldoCliente);
         } else {
             frameRocketLeague.setaSaldoAtual(0);
         }
         frameRocketLeague.setaUsuarioAtual(usuario);
+
     }//GEN-LAST:event_jmiRocketLeagueActionPerformed
 
     private void jmiAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAdicionarFundosActionPerformed
@@ -283,12 +287,12 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jmCadastros;
     private javax.swing.JMenu jmSaldoAtual;
     private javax.swing.JMenu jmUsuario;
     private javax.swing.JMenuItem jmiAdicionarFundos;
