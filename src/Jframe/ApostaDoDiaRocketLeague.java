@@ -21,13 +21,17 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     //Variaveis utilizadas para a classe.
     ArrayList<String> arrayListaTimes;
     ArrayList<String> arrayListaSons;
+
     PartidaTempoReal partidaTempoReal = new PartidaTempoReal();
+
     String nomeTimeAtual;
     String nomeTimeAtual2;
+
     float saldoAtual = 0;
     float saldoApostado = 0;
     float saldoGanhado = 0;
     float saldoPerdido = 0;
+
     String timeApostado = "";
     String usuario = "";
 
@@ -62,12 +66,15 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     private void leArquivosDiretorio() {
         Path caminho = Paths.get(System.getProperty("user.dir") + "\\TimesRL");
         DirectoryStream<Path> diretorio;
+
         try {
             diretorio = Files.newDirectoryStream(caminho);
             arrayListaTimes = new ArrayList();
+
             for (Path file : diretorio) {
                 arrayListaTimes.add(file.toAbsolutePath().toString());
             }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -90,19 +97,30 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         //Sorteia o time 1 aleatório da pasta e seta no JFrame sua imagem e nome.
         Random geradorNumeroAleatorio = new Random();
         String timeSorteado = arrayListaTimes.get(geradorNumeroAleatorio.nextInt(arrayListaTimes.size()));
+
         File timeAtual = new File(timeSorteado);
+
         nomeTimeAtual = timeAtual.getName().replace(".png", "");
+
         jlApostaTime1.setText(jlApostaTime1.getText().concat(" " + nomeTimeAtual + ":"));
+
         ImageIcon imagemTimes = new ImageIcon(timeSorteado);
+
         jlTime1.setIcon(imagemTimes);
+
         arrayListaTimes.remove(timeSorteado);
 
         //Sorteia o time 1 aleatório da pasta e seta no JFrame sua imagem e nome.
         String timeSorteado2 = arrayListaTimes.get(geradorNumeroAleatorio.nextInt(arrayListaTimes.size()));
+
         timeAtual = new File(timeSorteado2);
+
         nomeTimeAtual2 = timeAtual.getName().replace(".png", "");
+
         jlApostaTime2.setText(jlApostaTime2.getText().concat(" " + nomeTimeAtual2 + ":"));
+
         imagemTimes = new ImageIcon(timeSorteado2);
+
         jlTime2.setIcon(imagemTimes);
     }
 
@@ -113,6 +131,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             public void run() {
                 try {
                     saldoAtual = Float.parseFloat(jlSaldoAtual.getText());
+
                     for (int i = 5; i > -1; i--) {
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
@@ -120,6 +139,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     //Após o X tempo, inicia a partida e entra na Thread tempoDurantePartida.
                     iniciaPartida();
                     tempoDurantePartida();
+
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -137,17 +157,21 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     //Contador utilizado para pegar 0 segundo 5, gerando uma ação aleatória na partida.
                     int contadorEvento = 0;
                     desativaCampos();
+
                     for (int i = 10; i > -1; i--) {
                         contadorEvento += 1;
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
+
                         if (contadorEvento == 5) {
                             tocaSomPartida();
                             contadorEvento = 0;
                         }
                     }
+
                     tocaSomFimPartida();
                     verificaVencedorEPerdedor();
+
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -175,15 +199,18 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
             //Sorteia som e ação aleatória.
             Random geradorNumeroAleatorio = new Random();
+
             String somSorteado = arrayListaSons.get(geradorNumeroAleatorio.nextInt(arrayListaSons.size()));
+
             File somAtual = new File(somSorteado);
-            System.out.println(somAtual);
+
             arquivoInputStream = new FileInputStream(somSorteado);
+
             String nomeSomAtual = somAtual.getName().replace(".mp3", "");
 
             String timeConcretizado;
+
             int numero = geradorNumeroAleatorio.nextInt(2);
-            System.out.println(numero);
 
             if (numero == 0) {
                 timeConcretizado = nomeTimeAtual;
@@ -196,15 +223,19 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             if (nomeSomAtual.equals("save1")) {
                 partidaTempoReal.setaPartidaTempoReal("O jogador do time da " + timeConcretizado + " fez uma defesa!");
             }
+
             if (nomeSomAtual.equals("save2")) {
                 partidaTempoReal.setaPartidaTempoReal("O jogador do time da " + timeConcretizado + " fez uma boa defesa!");
             }
+
             if (nomeSomAtual.equals("save3")) {
                 partidaTempoReal.setaPartidaTempoReal("O jogador do time da " + timeConcretizado + " defendeu o seu gol");
             }
+
             if (nomeSomAtual.equals("epicsave1")) {
                 partidaTempoReal.setaPartidaTempoReal("QUE DEFESA INCRÍVEL DO JOGADOR DA " + timeConcretizado + "!");
             }
+
             if (nomeSomAtual.equals("epicsave2")) {
                 partidaTempoReal.setaPartidaTempoReal("DEFESA FANTÁSTICA DO TIME DA " + timeConcretizado + "!");
             }
@@ -219,7 +250,6 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     jlPlacarTime1.setText(placarAtual + "");
 
                 } else {
-
                     int placarAtual = Integer.parseInt(jlPlacarTime2.getText());
                     placarAtual++;
                     jlPlacarTime2.setText(placarAtual + "");
@@ -245,10 +275,12 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             //Caso o som e ação seja de um gol, seta placar também.
             if (nomeSomAtual.equals("goal3")) {
                 partidaTempoReal.setaPartidaTempoReal("UM BELO WALLDRAG E UM LINDO GOL DA " + timeConcretizado);
+
                 if (timeConcretizado == nomeTimeAtual) {
                     int placarAtual = Integer.parseInt(jlPlacarTime1.getText());
                     placarAtual++;
                     jlPlacarTime1.setText(placarAtual + "");
+
                 } else {
                     int placarAtual = Integer.parseInt(jlPlacarTime2.getText());
                     placarAtual++;
@@ -270,8 +302,11 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     private void tocaSomFimPartida() {
         try {
             FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\endgame.mp3");
+
             Player tocador = new Player(arquivoInputStream);
+
             tocador.play();
+
         } catch (IOException | JavaLayerException ex) {
             ex.printStackTrace();
         }
@@ -320,8 +355,8 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 setaSaldoAtual(saldoAtual);
                 eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, (saldoAtual));
             }
-        } else {
 
+        } else {
             jlFimPartidaTime1.setText("DERROTA");
             jlFimPartidaTime1.setForeground(Color.red);
             jlFimPartidaTime2.setText("VITÓRIA");
@@ -537,7 +572,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
         } else {
             if (saldoAtual <= 0.0f) {
+
                 JOptionPane.showMessageDialog(null, "Você está sem fundos, adicione mais para poder apostar.");
+
             } else {
                 jtApostaTime1.setEnabled(false);
                 saldoApostado = Float.parseFloat(jtApostaTime1.getText());
@@ -557,8 +594,8 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     private void jbApostarTime2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApostarTime2ActionPerformed
         if (saldoAtual <= 0.0f) {
             JOptionPane.showMessageDialog(null, "Você está sem fundos, adicione mais para poder apostar.");
-        } else {
 
+        } else {
             jtApostaTime1.setEnabled(false);
             saldoApostado = Integer.parseInt(jtApostaTime2.getText());
             jtApostaTime1.setText("");
