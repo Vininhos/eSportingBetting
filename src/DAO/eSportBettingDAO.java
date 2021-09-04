@@ -18,7 +18,7 @@ public class eSportBettingDAO {
     public eSportBettingDAO() {
         url = "jdbc:postgresql://localhost:5432/postgres";
         usuario = "postgres";
-        senha = "IRa@@123dd";
+        senha = "ira@@123dd";
     }
 
     private static eSportBettingDAO INSTANCE;
