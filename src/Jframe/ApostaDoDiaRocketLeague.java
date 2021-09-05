@@ -55,6 +55,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
     public void setaSaldoAtual(float saldo) {
         saldoAtual = saldo;
         jlSaldoAtual.setText(saldo + "");
+
     }
 
     public void setaUsuarioAtual(String usuario) {
@@ -584,8 +585,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 jbApostarTime1.setEnabled(false);
                 jbApostarTime2.setEnabled(false);
                 timeApostado = "time1";
+
                 saldoAtual -= saldoApostado;
                 setaSaldoAtual(saldoAtual);
+
             }
         }
     }//GEN-LAST:event_jbApostarTime1ActionPerformed
@@ -604,8 +607,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             jbApostarTime1.setEnabled(false);
             jbApostarTime2.setEnabled(false);
             timeApostado = "time2";
+
             saldoAtual -= saldoApostado;
             setaSaldoAtual(saldoAtual);
+
         }
     }//GEN-LAST:event_jbApostarTime2ActionPerformed
 

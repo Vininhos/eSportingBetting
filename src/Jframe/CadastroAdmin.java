@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 
 public class CadastroAdmin extends javax.swing.JFrame {
 
-    Functions functions = new Functions();
-
     /**
      * Creates new form CadastroAdmin
      */
@@ -16,13 +14,13 @@ public class CadastroAdmin extends javax.swing.JFrame {
         initComponents();
         //apagaCampos();
         setLocationRelativeTo(this);
+        jlDataNascimento.setVisible(false);
     }
 
     //Método que apaga campos.
     private void apagaCampos() {
         jtUsuario.setText("");
         jtCPF.setText("");
-        jtNascimento.setText("");
         jtEmail.setText("");
         jtNascimento.setText("");
         jpfSenha.setText("");
@@ -55,7 +53,8 @@ public class CadastroAdmin extends javax.swing.JFrame {
         jtUsuario = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jtCPF = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
+        jlDataNascimento = new javax.swing.JLabel();
+        jbLimparCampos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Admin");
@@ -96,7 +95,12 @@ public class CadastroAdmin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Nome:");
 
-        jtNascimento.setText("03/10/2000");
+        jtNascimento.setText("01/01/2020");
+        jtNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtNascimentoFocusGained(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("Senha:");
@@ -113,58 +117,65 @@ public class CadastroAdmin extends javax.swing.JFrame {
 
         jtCPF.setText("07083749582");
 
-        jLabel12.setText("Informar data de nascimento no formato dia/mês/ano.");
-        jLabel12.setFocusable(false);
+        jlDataNascimento.setText("OBS: Informar data de nascimento no formato dia/mês/ano.");
+        jlDataNascimento.setFocusable(false);
+
+        jbLimparCampos.setText("Limpar campos");
+        jbLimparCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparCamposActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel1)
-                .addContainerGap(123, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addComponent(jbCadastrar)
-                .addGap(154, 154, 154)
-                .addComponent(jbFechar)
-                .addContainerGap(74, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel11))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlDataNascimento)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(34, 34, 34)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jbCadastrar)
+                                .addGap(34, 34, 34)
+                                .addComponent(jbLimparCampos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbFechar)))))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jpfSenha, jtEmail, jtNome});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtCPF, jtUsuario});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbFechar, jbLimparCampos});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,12 +212,13 @@ public class CadastroAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(jlDataNascimento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbFechar)
-                    .addComponent(jbCadastrar))
-                .addGap(20, 20, 20))
+                    .addComponent(jbCadastrar)
+                    .addComponent(jbLimparCampos))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -218,33 +230,49 @@ public class CadastroAdmin extends javax.swing.JFrame {
     //Método responsável por serializar o cadastro do cliente.
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         try {
-            Administrador admin = new Administrador(
-                    jtUsuario.getText(),
-                    jpfSenha.getText(),
-                    jtNome.getText(),
-                    functions.converterData(jtNascimento.getText()),
-                    jtEmail.getText(),
-                    jtCPF.getText(),
-                    jcbGenero.getSelectedItem().toString());
 
-            int res = eSportBettingDAO.getInstance().adicionarAdminDAO(admin);
+            if (Functions.getInstance().verificaCampos(jtNome.getText(),
+                    jtEmail.getText(), jtUsuario.getText(),
+                    jpfSenha.getText(), jtCPF.getText(),
+                    jtNascimento.getText())) {
 
-            if (res != 0) {
-                JOptionPane.showMessageDialog(null,
-                        "Cadastro realizado com sucesso!",
-                        "Sucesso",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Aconteceu um erro ao cadastrar!",
-                        "Erro", JOptionPane.ERROR_MESSAGE);
+                Administrador admin = new Administrador(
+                        jtUsuario.getText(),
+                        jpfSenha.getText(),
+                        jtNome.getText(),
+                        Functions.getInstance().converterData(jtNascimento.getText()),
+                        jtEmail.getText(),
+                        jtCPF.getText(),
+                        jcbGenero.getSelectedItem().toString());
+
+                int res = eSportBettingDAO.getInstance().adicionarAdminDAO(admin);
+
+                if (res != 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "Cadastro realizado com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Aconteceu um erro ao cadastrar!",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                dispose();
             }
-            dispose();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jtNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtNascimentoFocusGained
+        jlDataNascimento.setVisible(true);
+        jtNascimento.setText("");
+    }//GEN-LAST:event_jtNascimentoFocusGained
+
+    private void jbLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparCamposActionPerformed
+        apagaCampos();
+    }//GEN-LAST:event_jbLimparCamposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,7 +313,6 @@ public class CadastroAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -293,7 +320,9 @@ public class CadastroAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbFechar;
+    private javax.swing.JButton jbLimparCampos;
     private javax.swing.JComboBox<String> jcbGenero;
+    private javax.swing.JLabel jlDataNascimento;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JTextField jtCPF;
     private javax.swing.JTextField jtEmail;

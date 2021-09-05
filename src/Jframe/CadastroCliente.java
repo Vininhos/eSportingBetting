@@ -8,12 +8,20 @@ import javax.swing.JOptionPane;
 
 public class CadastroCliente extends javax.swing.JFrame {
 
-    Functions functions = new Functions();
-
     public CadastroCliente() {
         initComponents();
         setLocationRelativeTo(this);
         jlDataNascimento.setVisible(false);
+    }
+
+    //Método que apaga campos.
+    private void apagaCampos() {
+        jtUsuario.setText("");
+        jtCPF.setText("");
+        jtNascimento.setText("");
+        jtEmail.setText("");
+        jpfSenha.setText("");
+        jtNome.setText("");
     }
 
     /**
@@ -43,6 +51,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jlDataNascimento = new javax.swing.JLabel();
         jtNascimento = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jbApagarCampos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -62,7 +71,7 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jtNome.setText("Testador");
 
-        jtEmail.setText("SimTeste123");
+        jtEmail.setText("vini@email.com");
 
         jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
@@ -90,14 +99,20 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jtUsuario.setText("usuario123");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("CPF:");
 
         jtCPF.setText("0703633113");
 
-        jlDataNascimento.setText("Informar data de nascimento no formato dia/mês/ano.");
+        jlDataNascimento.setText("OBS: Informar data de nascimento no formato dia/mês/ano.");
         jlDataNascimento.setFocusable(false);
 
-        jtNascimento.setText("03/10/1999");
+        jtNascimento.setText("01/01/2000");
+        jtNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtNascimentoFocusGained(evt);
+            }
+        });
         jtNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtNascimentoActionPerformed(evt);
@@ -106,6 +121,13 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Nascimento:");
+
+        jbApagarCampos.setText("Apagar campos");
+        jbApagarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbApagarCamposActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,7 +143,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jbCadastrar)
-                                .addGap(216, 216, 216)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbApagarCampos)
+                                .addGap(18, 18, 18)
                                 .addComponent(jbFechar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,13 +166,12 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlDataNascimento)
-                                    .addComponent(jtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addComponent(jtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlDataNascimento))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbFechar});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbApagarCampos, jbCadastrar, jbFechar});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcbGenero, jtUsuario});
 
@@ -192,7 +215,8 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbFechar)
-                    .addComponent(jbCadastrar))
+                    .addComponent(jbCadastrar)
+                    .addComponent(jbApagarCampos))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -205,32 +229,37 @@ public class CadastroCliente extends javax.swing.JFrame {
 
     //Método responsável por serializar o cadastro do cliente.
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-
         try {
-            Cliente cliente = new Cliente(
-                    jtUsuario.getText(),
-                    jpfSenha.getText(),
-                    jtNome.getText(),
-                    functions.converterData(jtNascimento.getText()),
-                    jtEmail.getText(),
-                    jtCPF.getText(),
-                    jcbGenero.getSelectedItem().toString());
+            if (Functions.getInstance().verificaCampos(jtNome.getText(),
+                    jtEmail.getText(), jtUsuario.getText(),
+                    jpfSenha.getText(), jtCPF.getText(),
+                    jtNascimento.getText())) {
 
-            int res = eSportBettingDAO.getInstance().adicionarClienteDAO(cliente);
+                Cliente cliente = new Cliente(
+                        jtUsuario.getText(),
+                        jpfSenha.getText(),
+                        jtNome.getText(),
+                        Functions.getInstance().converterData(jtNascimento.getText()),
+                        jtEmail.getText(),
+                        jtCPF.getText(),
+                        jcbGenero.getSelectedItem().toString());
 
-            if (res != 0) {
-                JOptionPane.showMessageDialog(null,
-                        "Cadastro realizado com sucesso!",
-                        "Sucesso",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Aconteceu um erro ao cadastrar!",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE);
+                int res = eSportBettingDAO.getInstance().adicionarClienteDAO(cliente);
+
+                if (res != 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "Cadastro realizado com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Aconteceu um erro ao cadastrar!",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                dispose();
             }
-            dispose();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -238,9 +267,17 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNascimentoActionPerformed
-        jtNascimento.setText("");
-        jlDataNascimento.setVisible(true);
+
     }//GEN-LAST:event_jtNascimentoActionPerformed
+
+    private void jtNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtNascimentoFocusGained
+        jlDataNascimento.setVisible(true);
+        jtNascimento.setText("");
+    }//GEN-LAST:event_jtNascimentoFocusGained
+
+    private void jbApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApagarCamposActionPerformed
+        apagaCampos();
+    }//GEN-LAST:event_jbApagarCamposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +323,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jbApagarCampos;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbFechar;
     private javax.swing.JComboBox<String> jcbGenero;

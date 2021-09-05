@@ -2,7 +2,19 @@ package Jframe;
 
 import Class.Administrador;
 import Class.Cliente;
+import Class.Functions;
+import Class.ReturnClienteDataDB;
 import DAO.eSportBettingDAO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class FrameMenuPrincipal extends javax.swing.JFrame {
@@ -59,6 +71,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmCadastros = new javax.swing.JMenu();
         jmiCadCliente = new javax.swing.JMenuItem();
         jmiCadAdmin = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jmiGerarRelatorio = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -169,6 +183,18 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmCadastros);
 
+        jMenu1.setText("Relatórios");
+
+        jmiGerarRelatorio.setText("Gerar relatório geral do usuário");
+        jmiGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGerarRelatorioActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiGerarRelatorio);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,8 +218,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
     private void jmiCadAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadAdminActionPerformed
         String comparador = JOptionPane.showInputDialog(
-                "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: Flyps é cansado)");
-        if (comparador.equalsIgnoreCase("Flyps é cansado")) {
+                "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: tiorenas)");
+        if (comparador.equalsIgnoreCase("tiorenas")) {
             CadastroAdmin cadAdmin = new CadastroAdmin();
             cadAdmin.setVisible(true);
         } else {
@@ -208,8 +234,9 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         float saldoCliente = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
 
-        if (saldoCliente != -1) {
+        if (saldoCliente > 0) {
             frameRocketLeague.setaSaldoAtual(saldoCliente);
+
         } else {
             frameRocketLeague.setaSaldoAtual(0);
         }
@@ -243,6 +270,37 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         saldoNovo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
         jmSaldoAtual.setText(saldoNovo + "");
     }//GEN-LAST:event_jmiAtualizar2ActionPerformed
+
+    private void jmiGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarRelatorioActionPerformed
+        try {
+
+            Document pdf = new Document();
+
+            ArrayList<String> retProcessedCliente = Functions.getInstance().gerarStringPDFCliente(eSportBettingDAO.getInstance().retornaDadosClienteParaRelatorio(usuario));
+
+            PdfWriter.getInstance(pdf, new FileOutputStream(System.getProperty("user.dir") + "\\Relatorios\\Relatorio" + usuario + ".pdf"));
+
+            pdf.open();
+
+            pdf.addTitle("Relatório do usuário " + usuario);
+            pdf.addAuthor("eSportingBetting");
+            pdf.add(new Paragraph("Relatório do Usuário: " + usuario, new Font(Font.FontFamily.TIMES_ROMAN, 16)));
+            pdf.add(new Paragraph("\n\nSuas transações:\n"));
+
+            for (String dadosClienteProcessados : retProcessedCliente) {
+                pdf.add(new Paragraph(dadosClienteProcessados));
+            }
+
+            pdf.close();
+
+            JOptionPane.showMessageDialog(null,
+                    "O Relatório PDF foi gerado no diretório onde está localizado o eSportingBetting. (diretório do projeto)",
+                    "Relatório Gerado", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (FileNotFoundException | DocumentException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jmiGerarRelatorioActionPerformed
 
     //Muda o nome do usuário no menu para o que foi cadastrado.
     public void mudaNomeUsuario(String usuario) {
@@ -287,6 +345,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -302,6 +361,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiCadCliente;
     private javax.swing.JMenuItem jmiDeslogar;
     private javax.swing.JMenuItem jmiGerarFundos;
+    private javax.swing.JMenuItem jmiGerarRelatorio;
     private javax.swing.JMenuItem jmiRocketLeague;
     // End of variables declaration//GEN-END:variables
 }
