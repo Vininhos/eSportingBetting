@@ -33,6 +33,11 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bem-vindo ao eSportBetting");
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Login - eSportBetting");
@@ -41,6 +46,11 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jLabel2.setText("Usuário:");
 
         jtUsuario.setText("Vinicius");
+        jtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtUsuarioKeyPressed(evt);
+            }
+        });
 
         jbLogar.setText("Logar");
         jbLogar.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +75,11 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jLabel3.setText("Senha:");
 
         jpfSenha.setText("123");
+        jpfSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jpfSenhaKeyPressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Tipo Usuário:");
@@ -177,6 +192,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
                             retCliente.getEmail(),
                             retCliente.getCpf(),
                             retCliente.getGenero());
+
                     frameMenu.carregarDadosUsuarioMenuPrincipal(cliente, null);
 
                 } else {
@@ -203,9 +219,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jbLogarActionPerformed
 
     private void jbLogarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbLogarKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jbLogar.doClick();
-        }
+
     }//GEN-LAST:event_jbLogarKeyPressed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
@@ -235,6 +249,24 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
 
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jbLogar.doClick();
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jpfSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpfSenhaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jbLogar.doClick();
+        }
+    }//GEN-LAST:event_jpfSenhaKeyPressed
+
+    private void jtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jbLogar.doClick();
+        }
+    }//GEN-LAST:event_jtUsuarioKeyPressed
 
     /**
      * @param args the command line arguments

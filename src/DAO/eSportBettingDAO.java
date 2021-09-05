@@ -2,11 +2,15 @@ package DAO;
 
 import Class.Administrador;
 import Class.Cliente;
+import Class.ReturnClienteDataDB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class eSportBettingDAO {
 
@@ -38,9 +42,11 @@ public class eSportBettingDAO {
         try {
             if (con == null) {
                 return false;
+
             } else if (con.isClosed()) {
                 return false;
             }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -53,6 +59,7 @@ public class eSportBettingDAO {
                 Class.forName("org.postgresql.Driver");
                 con = DriverManager.getConnection(url, usuario, senha);
                 System.out.println("Conexão estabelecida com sucesso." + "\n");
+
             } else {
                 System.out.println("A conexão já está estabelecida." + "\n");
             }
@@ -86,6 +93,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return 1;
     }
 
@@ -114,6 +122,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return 1;
     }
 
@@ -129,6 +138,7 @@ public class eSportBettingDAO {
             if (tipoUsuario == "Cliente") {
                 query = "select nome from cliente "
                         + "where usuario = '" + usuario + "' and senha = '" + senha + "';";
+
             } else {
                 query = "select nome from administrador "
                         + "where usuario = '" + usuario + "' and senha = '" + senha + "';";
@@ -147,6 +157,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return null;
     }
 
@@ -163,14 +174,16 @@ public class eSportBettingDAO {
             ResultSet res = statement.executeQuery(query);
 
             while (res.next()) {
-                cliente = new Cliente(res.getString("usuario"),
+                cliente = new Cliente(
+                        res.getString("usuario"),
                         res.getString("senha"),
                         res.getFloat("saldo"),
                         res.getString("nome"),
                         res.getString("datanascimento"),
                         res.getString("email"),
                         res.getString("cpf"),
-                        res.getString("genero"));
+                        res.getString("genero")
+                );
             }
 
             con.close();
@@ -180,6 +193,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return null;
     }
 
@@ -197,13 +211,15 @@ public class eSportBettingDAO {
             ResultSet res = statement.executeQuery(query);
 
             while (res.next()) {
-                admin = new Administrador(res.getString("usuario"),
+                admin = new Administrador(
+                        res.getString("usuario"),
                         res.getString("senha"),
                         res.getString("nome"),
                         res.getString("datanascimento"),
                         res.getString("email"),
                         res.getString("cpf"),
-                        res.getString("genero"));
+                        res.getString("genero")
+                );
             }
 
             con.close();
@@ -213,6 +229,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return null;
     }
 
@@ -240,6 +257,7 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return -1;
     }
 
@@ -263,6 +281,42 @@ public class eSportBettingDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return 1;
+    }
+
+    public ArrayList<ReturnClienteDataDB> retornaDadosClienteParaRelatorio(String usuario) {
+        try {
+
+            iniciarConexao();
+
+            Statement statement = con.createStatement();
+            ReturnClienteDataDB returnCliente = null;
+
+            String query = "select substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente where usuario = '"
+                    + usuario + "' and operacao = 'UPDATE';";
+
+            ResultSet res = statement.executeQuery(query);
+            ArrayList<ReturnClienteDataDB> dadosCliente = new ArrayList<ReturnClienteDataDB>();
+
+            while (res.next()) {
+                returnCliente = new ReturnClienteDataDB(
+                        res.getString("data_hora"),
+                        res.getFloat("saldoantigo"),
+                        res.getFloat("novosaldo")
+                );
+
+                dadosCliente.add(returnCliente);
+            }
+
+            con.close();
+
+            return dadosCliente;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }
