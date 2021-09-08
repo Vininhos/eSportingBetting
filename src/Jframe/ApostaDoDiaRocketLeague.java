@@ -608,6 +608,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     /**
      * Botão que realiza as operações caso o usuário aposte no time 1.
      */
