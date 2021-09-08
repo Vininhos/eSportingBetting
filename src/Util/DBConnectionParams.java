@@ -1,4 +1,4 @@
-package Class;
+package Util;
 
 /**
  *
@@ -18,6 +18,9 @@ public class DBConnectionParams {
         this.senha = senha;
     }
 
+    /**
+     * Gera uma URL para a conexão do banco de dados.
+     */
     public String generateURL() {
         return "jdbc:postgresql://localhost:" + this.portaBanco + "/" + this.nomeBanco;
     }

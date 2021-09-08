@@ -11,17 +11,24 @@ public class PartidaTempoReal extends javax.swing.JFrame {
         getContentPane().setBackground(Color.orange);
     }
 
-    //Método utilizado para enviar mensagens para a área de texto, vindo do 
-    //ApostaRocketLeagueFrame.
+    /**
+     * Método utilizado para enviar mensagens para a área de texto, vindo do
+     * ApostaRocketLeagueFrame.
+     */
     public void setaPartidaTempoReal(String acontecimento) {
         jtaPartida.setText(jtaPartida.getText() + "\n\n" + acontecimento);
     }
 
-    //Métodos para setar o nome dos times.
+    /**
+     * Método para setar o nome do time 1.
+     */
     public void setaNomeTime1(String time1) {
         jlTime1.setText(time1);
     }
 
+    /**
+     * Método para setar o nome dos time 2.
+     */
     public void setaNomeTime2(String time2) {
         jlTime2.setText(time2);
     }

@@ -44,26 +44,41 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         getContentPane().setBackground(Color.white);
     }
 
-    //Método responsável por iniciar toda a funcionalidade do JFrame.
+    /**
+     * Método responsável por iniciar toda a funcionalidade do JFrame.
+     */
     public void iniciarFuncionalidades() {
         leArquivosDiretorio();
         geraApostaDia();
         tempoAntesPartida();
     }
 
-    //Método que seta o saldo atual do menu principal para este jframe.
+    /**
+     * Método que seta o saldo atual do menu principal para este JFrame.
+     *
+     * @param saldo saldo do usuario atual logado, sendo atualizado a cada
+     * aposta nova.
+     */
     public void setaSaldoAtual(float saldo) {
         saldoAtual = saldo;
         jlSaldoAtual.setText(saldo + "");
 
     }
 
+    /**
+     * Método que seta o usuario atual logado do menu principal para este
+     * JFrame.
+     *
+     * @param usuario usuario atual logado.
+     */
     public void setaUsuarioAtual(String usuario) {
         this.usuario = usuario;
     }
 
-    /*Método que lê e grava em um arraylist todos os nomes do arquivo do
-    diretório dos times do Rocket League.*/
+    /**
+     * Método que lê e grava em um arraylist todos os nomes do arquivo do
+     * diretório dos times do Rocket League.
+     */
     private void leArquivosDiretorio() {
         Path caminho = Paths.get(System.getProperty("user.dir") + "\\TimesRL");
         DirectoryStream<Path> diretorio;
@@ -81,7 +96,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }
     }
 
-    //Método simples que desativa os campos desse JFrame.
+    /**
+     * Método simples que desativa os campos desse JFrame.
+     */
     private void desativaCampos() {
         jtApostaTime1.setEnabled(false);
         jtApostaTime2.setEnabled(false);
@@ -91,8 +108,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jbApostarTime2.setEnabled(false);
     }
 
-    /*Método responsável por gerar aleatoriamente os times que estão no arraylist
-    e por colocar as imagens dos mesmos no jframe.*/
+    /**
+     * Método responsável por gerar aleatoriamente os times que estão no
+     * arraylist e por colocar as imagens dos mesmos no JFrame.
+     */
     private void geraApostaDia() {
 
         //Sorteia o time 1 aleatório da pasta e seta no JFrame sua imagem e nome.
@@ -125,7 +144,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jlTime2.setIcon(imagemTimes);
     }
 
-    //Thread responsável por gerar a contagem antes de iniciar a partida.
+    /**
+     * Thread responsável por gerar a contagem antes de iniciar a partida.
+     */
     private void tempoAntesPartida() {
         new Thread(new Runnable() {
             @Override
@@ -148,8 +169,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }).start();
     }
 
-    /*Thread responsável por administrar o tempo quando a partida está rolando,
-    gerando uma ação de um dos times a cada 5 segundos.*/
+    /**
+     * Thread responsável por administrar o tempo quando a partida está rolando,
+     * gerando uma ação de um dos times a cada 5 segundos.
+     */
     private void tempoDurantePartida() {
         new Thread(new Runnable() {
             @Override
@@ -180,8 +203,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }).start();
     }
 
-    /*Método utilizado para tocar o som, sendo sorteado através de um número aletório
-    pela classe "Random"*/
+    /**
+     * Método utilizado para tocar o som, sendo sorteado através de um número
+     * aletório pela classe "Random".
+     */
     private void tocaSomPartida() {
 
         FileInputStream arquivoInputStream = null;
@@ -299,10 +324,12 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
     }
 
-    //Método que toca a música no fim da partida.
+    /**
+     * Método que toca a música no fim da partida.
+     */
     private void tocaSomFimPartida() {
         try {
-            FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\endgame.mp3");
+            FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\SonsRL\\endgame\\endgame.mp3");
 
             Player tocador = new Player(arquivoInputStream);
 
@@ -313,7 +340,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }
     }
 
-    //Método responsável por iniciar os componentes do começo da partida.
+    /**
+     * Método responsável por iniciar os componentes do começo da partida.
+     */
     private void iniciaPartida() {
         jlEstadoPartida.setText("A PARTIDA INICIOU E TERMINA EM:");
         jlTempoPartida.setText("30");
@@ -322,8 +351,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         partidaTempoReal.setaNomeTime2(nomeTimeAtual2);
     }
 
-    /*Método responsável por administrar todas as ações após o fim da partida,
-    pintando jLabels e pagando o usuário que apostou corretamente*/
+    /**
+     * Método responsável por administrar todas as ações após o fim da partida,
+     * pintando jLabels e pagando o usuário que apostou corretamente
+     */
     private void verificaVencedorEPerdedor() {
         int golsTime1 = Integer.parseInt(jlPlacarTime1.getText());
         int golsTime2 = Integer.parseInt(jlPlacarTime2.getText());
@@ -348,13 +379,15 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
             if (timeApostado == "time1") {
 
-                saldoGanhado += (saldoApostado * 2);
+                saldoGanhado = (saldoApostado * 2);
+
                 setaSaldoAtual(saldoAtual + saldoGanhado);
-                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, (saldoAtual + saldoGanhado));
+
+                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldoAtual);
 
             } else {
                 setaSaldoAtual(saldoAtual);
-                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, (saldoAtual));
+                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldoAtual);
             }
 
         } else {
@@ -365,18 +398,25 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
             partidaTempoReal.setaPartidaTempoReal("NOSSO VENCEDOR É O TIME DA " + nomeTimeAtual2 + "!");
 
             if (timeApostado == "time2") {
-                saldoAtual += (saldoApostado * 2);
+                saldoGanhado = (saldoApostado * 2);
+
                 setaSaldoAtual(saldoAtual + saldoGanhado);
-                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, (saldoAtual + saldoGanhado));
+
+                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldoAtual);
 
             } else {
+                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldoAtual);
                 setaSaldoAtual(saldoAtual);
-                eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, (saldoAtual));
+
             }
         }
     }
 
-    //Método responsável por atualizar os fundos do menu principal.
+    /**
+     * Método responsável por atualizar os fundos do menu principal.
+     *
+     * @return retorna o saldo atual do cliente.
+     */
     public float atualizaFundos() {
         return saldoAtual;
     }
@@ -453,8 +493,10 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
 
         jlFimPartidaTime2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
-        jLabel3.setText("Saldo atual:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Saldo atual: R$");
 
+        jlSaldoAtual.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlSaldoAtual.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -566,7 +608,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Botão que realiza as operações caso o usuário aposte no time 1.
+    /**
+     * Botão que realiza as operações caso o usuário aposte no time 1.
+     */
     private void jbApostarTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApostarTime1ActionPerformed
         if (Float.parseFloat(jlSaldoAtual.getText()) < Float.parseFloat(jtApostaTime1.getText())) {
             JOptionPane.showMessageDialog(this, "Aposte um valor válido.");
@@ -593,7 +637,9 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbApostarTime1ActionPerformed
 
-    //Botão que realiza as operações caso o usuário aposte no time 2.
+    /**
+     * Botão que realiza as operações caso o usuário aposte no time 2.
+     */
     private void jbApostarTime2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApostarTime2ActionPerformed
         if (saldoAtual <= 0.0f) {
             JOptionPane.showMessageDialog(null, "Você está sem fundos, adicione mais para poder apostar.");

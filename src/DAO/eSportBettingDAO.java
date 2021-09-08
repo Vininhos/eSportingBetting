@@ -1,16 +1,16 @@
 package DAO;
 
-import Class.Administrador;
-import Class.Cliente;
-import Class.ReturnClienteDataDB;
+import Model.Administrador;
+import Model.Cliente;
+import Util.PropertiesHandler;
+import Util.ReturnClienteDataDB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class eSportBettingDAO {
 
@@ -19,14 +19,23 @@ public class eSportBettingDAO {
     private String senha;
     private Connection con;
 
+    PropertiesHandler propertiesHandler = new PropertiesHandler();
+    ArrayList<String> dbParams = propertiesHandler.getParamsDBConnectionProperties();
+
     public eSportBettingDAO() {
-        url = "jdbc:postgresql://localhost:5432/postgres";
-        usuario = "postgres";
-        senha = "ira@@123dd";
+        url = dbParams.get(0);
+        usuario = dbParams.get(1);
+        senha = dbParams.get(2);
     }
 
     private static eSportBettingDAO INSTANCE;
 
+    /**
+     * Método por gerenciar o Singleton do objeto DAO.
+     *
+     * @return retorna uma nova instância, caso não existe. Se existir, retorna
+     * a existente.
+     */
     public static eSportBettingDAO getInstance() {
         if (INSTANCE == null) {
             synchronized (eSportBettingDAO.class) {
@@ -35,9 +44,16 @@ public class eSportBettingDAO {
                 }
             }
         }
+
         return INSTANCE;
     }
 
+    /**
+     * Método por verificar se uma conexão com o banco de dados já existe.
+     *
+     * @return retorna true caso já exista uma conexão aberta. False para uma
+     * conexão inexistente
+     */
     public boolean verificaConexao() {
         try {
             if (con == null) {
@@ -53,11 +69,17 @@ public class eSportBettingDAO {
         return true;
     }
 
+    /**
+     * Método por iniciar uma conexão com o banco de dados.
+     *
+     */
     public void iniciarConexao() {
         try {
             if (!verificaConexao()) {
                 Class.forName("org.postgresql.Driver");
+
                 con = DriverManager.getConnection(url, usuario, senha);
+
                 System.out.println("Conexão estabelecida com sucesso." + "\n");
 
             } else {
@@ -68,6 +90,37 @@ public class eSportBettingDAO {
         }
     }
 
+    public boolean realizarConexaoTeste(String banco, int porta, String usuario, String senha) {
+        try {
+            if (!verificaConexao()) {
+
+                String url = "jdbc:postgresql://localhost:" + porta + "/" + banco;
+
+                Class.forName("org.postgresql.Driver");
+
+                con = DriverManager.getConnection(url, usuario, senha);
+
+                con.close();
+
+                JOptionPane.showMessageDialog(null, "Conexão de teste com o banco de dados realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                return true;
+
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Houve um problema na conexão. Verifique seus dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    /**
+     * Método por adicionar um cliente no banco de dados.
+     *
+     * @param cliente objeto Cliente criado a partir do JFrame do cadastro de
+     * Cliente.
+     *
+     * @return retorna um inteiro, sendo o valor 0 para sucesso e 1 para erro.
+     */
     public int adicionarClienteDAO(Cliente cliente) {
         try {
 
@@ -78,7 +131,7 @@ public class eSportBettingDAO {
             String query = "insert into cliente values (default,'"
                     + cliente.getUsuario()
                     + "','" + cliente.getSenha()
-                    + "',0,'" + cliente.getNome()
+                    + "',10,'" + cliente.getNome()
                     + "','" + cliente.getDataNascimento()
                     + "','" + cliente.getEmail() + "','"
                     + cliente.getCpf() + "','"
@@ -97,6 +150,14 @@ public class eSportBettingDAO {
         return 1;
     }
 
+    /**
+     * Método por adicionar um administrador no banco de dados.
+     *
+     * @param admin objeto Cliente criado a partir do JFrame do cadastro de
+     * Cliente.
+     *
+     * @return retorna um inteiro, sendo o valor 0 para sucesso e 1 para erro.
+     */
     public int adicionarAdminDAO(Administrador admin) {
         try {
 
@@ -126,6 +187,17 @@ public class eSportBettingDAO {
         return 1;
     }
 
+    /**
+     * Método por verificar qual o tipo de login que será utilizado, seja
+     * cliente ou admin, e por fim, realiza a captura do nome do usuário
+     * informado. Verificamos principalmente se o usuário existe no banco de
+     * dados.
+     *
+     * @param usuario usuario informado na tela de login.
+     * @param senha senha informada na tela de login.
+     * @param tipoUsuario tipo de usuário selecionado na tela de login.
+     * @return retorna um inteiro, sendo o valor 0 para sucesso e 1 para erro.
+     */
     public String verificarLoginDAO(String usuario, String senha, String tipoUsuario) {
         try {
 
@@ -161,6 +233,18 @@ public class eSportBettingDAO {
         return null;
     }
 
+    /**
+     * Método responsável por retornar todos os parâmetros do cliente informado
+     * na tela de login, após a verificação da existência do mesmo.
+     *
+     *
+     * @param usuario usuario informado na tela de login.
+     *
+     * @param senha senha informada na tela de login.
+     *
+     * @return retorna um objeto do tipo cliente, através das informações do
+     * banco de dados.
+     */
     public Cliente returnParametrosCliente(String usuario, String senha) {
         try {
 
@@ -197,6 +281,18 @@ public class eSportBettingDAO {
         return null;
     }
 
+    /**
+     * Método responsável por retornar todos os parâmetros do administrador
+     * informado na tela de login, após a verificação da existência do mesmo.
+     *
+     *
+     * @param usuario usuario informado na tela de login.
+     *
+     * @param senha senha informada na tela de login.
+     *
+     * @return retorna um objeto do tipo cliente, através das informações do
+     * banco de dados.
+     */
     public Administrador returnParametrosAdministrador(String usuario, String senha) {
         try {
 
@@ -233,6 +329,14 @@ public class eSportBettingDAO {
         return null;
     }
 
+    /**
+     * Método por retornar o saldo atual do cliente logado atualmente.
+     *
+     *
+     * @param usuario usuario atual logado.
+     *
+     * @return retorna o saldo do usuario atual.
+     */
     public float retornaSaldoCliente(String usuario) {
         try {
 
@@ -285,7 +389,85 @@ public class eSportBettingDAO {
         return 1;
     }
 
-    public ArrayList<ReturnClienteDataDB> retornaDadosClienteParaRelatorio(String usuario) {
+    /**
+     * Método por retornar todos os dados relacionados a seus ganhos e perca no
+     * sistema.
+     *
+     *
+     * @param usuario usuario logado atualmente.
+     *
+     * @return retorna ArrayList com todos os ganhos e percas do cliente.
+     */
+    public ArrayList<ReturnClienteDataDB> retornaDadosClienteRelatorio(String usuario) {
+        try {
+
+            iniciarConexao();
+
+            Statement statement = con.createStatement();
+            ReturnClienteDataDB returnCliente = null;
+            String query = null;
+            boolean shouldReadUsuario;
+
+            if (usuario.isEmpty()) {
+                query = "select usuario, substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente order by data_hora asc";
+                shouldReadUsuario = true;
+
+            } else {
+                query = "select substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente where usuario = '"
+                        + usuario + "' and operacao = 'UPDATE';";
+                shouldReadUsuario = false;
+            }
+
+            ResultSet res = statement.executeQuery(query);
+            ArrayList<ReturnClienteDataDB> dadosCliente = new ArrayList<>();
+
+            if (shouldReadUsuario) {
+
+                while (res.next()) {
+                    returnCliente = new ReturnClienteDataDB(
+                            res.getString("usuario"),
+                            res.getString("data_hora"),
+                            res.getFloat("saldoantigo"),
+                            res.getFloat("novosaldo")
+                    );
+
+                    dadosCliente.add(returnCliente);
+                }
+
+            } else {
+
+                while (res.next()) {
+                    returnCliente = new ReturnClienteDataDB(
+                            res.getString("usuario"),
+                            res.getString("data_hora"),
+                            res.getFloat("saldoantigo"),
+                            res.getFloat("novosaldo")
+                    );
+
+                    dadosCliente.add(returnCliente);
+                }
+            }
+
+            con.close();
+
+            return dadosCliente;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Método por retornar todos os dados de todos os clientes cadastrados no
+     * banco de dados.
+     *
+     *
+     *
+     * @return retorna um ArrayList com todos os dados de todos os clientes.
+     */
+    public ArrayList<ReturnClienteDataDB> retornaTodosOsDadosClientesRelatorio() {
         try {
 
             iniciarConexao();
@@ -293,14 +475,14 @@ public class eSportBettingDAO {
             Statement statement = con.createStatement();
             ReturnClienteDataDB returnCliente = null;
 
-            String query = "select substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente where usuario = '"
-                    + usuario + "' and operacao = 'UPDATE';";
+            String query = "select usuario, substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente order by data_hora asc;";
 
             ResultSet res = statement.executeQuery(query);
             ArrayList<ReturnClienteDataDB> dadosCliente = new ArrayList<ReturnClienteDataDB>();
 
             while (res.next()) {
                 returnCliente = new ReturnClienteDataDB(
+                        res.getString("usuario"),
                         res.getString("data_hora"),
                         res.getFloat("saldoantigo"),
                         res.getFloat("novosaldo")

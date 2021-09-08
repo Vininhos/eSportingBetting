@@ -160,14 +160,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtNome">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Testador"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtEmail">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="vini@email.com"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jcbGenero">
       <Properties>
@@ -215,14 +209,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jpfSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="123"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jpfSenhaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jtUsuario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="usuario123"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
@@ -233,9 +224,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtCPF">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="0703633113"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlDataNascimento">
       <Properties>

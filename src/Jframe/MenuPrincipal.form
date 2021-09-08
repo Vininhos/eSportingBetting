@@ -37,17 +37,9 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAdicionarFundosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiGerarFundos">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gerar Milh&#xf5;es de Bolsonaros (ADM)"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarFundosActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiAtualizar2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Atualizar"/>
+                <Property name="text" type="java.lang.String" value="Atualizar Dinheiros"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAtualizar2ActionPerformed"/>
@@ -75,7 +67,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiAtualizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Atualizar"/>
+                <Property name="text" type="java.lang.String" value="Atualizar Dinheiros"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAtualizarActionPerformed"/>
@@ -116,12 +108,20 @@
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiGerarRelatorio">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiGerarRelatorioUsuario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gerar relat&#xf3;rio geral do usu&#xe1;rio"/>
+                <Property name="text" type="java.lang.String" value="Gerar relat&#xf3;rio geral de apostas e dep&#xf3;sitos do usu&#xe1;rio"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarRelatorioActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarRelatorioUsuarioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiGerarRelatorioTodosUsuarios">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gerar relat&#xf3;rio de todos os usu&#xe1;rios (ADM)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarRelatorioTodosUsuariosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
