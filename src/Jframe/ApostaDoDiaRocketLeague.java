@@ -154,7 +154,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                 try {
                     saldoAtual = Float.parseFloat(jlSaldoAtual.getText());
 
-                    for (int i = 5; i > -1; i--) {
+                    for (int i = 20; i > -1; i--) {
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
                     }
@@ -182,7 +182,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
                     int contadorEvento = 0;
                     desativaCampos();
 
-                    for (int i = 10; i > -1; i--) {
+                    for (int i = 30; i > -1; i--) {
                         contadorEvento += 1;
                         Thread.sleep(1000);
                         jlTempoPartida.setText(i + "");
@@ -481,7 +481,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         jlEstadoPartida.setText("Tempo antes da partida começar:");
 
         jlTempoPartida.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlTempoPartida.setText("15");
+        jlTempoPartida.setText("20");
 
         jlPlacarTime2.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jlPlacarTime2.setText("0");
@@ -608,6 +608,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     /**
      * Botão que realiza as operações caso o usuário aposte no time 1.
      */
