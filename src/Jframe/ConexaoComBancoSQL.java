@@ -5,12 +5,12 @@
  */
 package Jframe;
 
-import Class.DBConnectionParams;
-import java.io.File;
+import DAO.eSportBettingDAO;
+import Util.DBConnectionParams;
+import Util.Functions;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,16 +46,13 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
         jrbAlterarPortaBanco = new javax.swing.JRadioButton();
         jpfSenha = new javax.swing.JPasswordField();
         jbSalvar = new javax.swing.JButton();
+        jbVerificarConexao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Conexão com o Banco de Dados");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Conexão com o Banco de Dados PostgreSQL");
-
-        jtNomeBanco.setText("postgresql");
-
-        jtUsuario.setText("postgresql");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Usuário:");
@@ -84,8 +81,6 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
             }
         });
 
-        jpfSenha.setText("ira@@123dd");
-
         jbSalvar.setText("Salvar");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,10 +88,23 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
             }
         });
 
+        jbVerificarConexao.setText("Verificar Conexão");
+        jbVerificarConexao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVerificarConexaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbVerificarConexao)
+                .addGap(71, 71, 71))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -116,11 +124,7 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
                                         .addComponent(jtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                                         .addComponent(jpfSenha))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jtPortaBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -132,6 +136,8 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtNomeBanco, jtUsuario});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbSalvar, jbVerificarConexao});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,25 +161,40 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jtPortaBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jrbAlterarPortaBanco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(jbSalvar)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSalvar)
+                    .addComponent(jbVerificarConexao))
+                .addGap(33, 33, 33))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbSalvar, jbVerificarConexao});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrbAlterarPortaBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbAlterarPortaBancoActionPerformed
-        jtPortaBanco.setEnabled(true);
+        if (jrbAlterarPortaBanco.isSelected()) {
+            jtPortaBanco.setEnabled(true);
+            jtPortaBanco.setText("");
+        } else {
+            jtPortaBanco.setEnabled(false);
+            jtPortaBanco.setText("5432");
+        }
+
     }//GEN-LAST:event_jrbAlterarPortaBancoActionPerformed
 
     private void jtPortaBancoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtPortaBancoFocusGained
         jtPortaBanco.setText("");
     }//GEN-LAST:event_jtPortaBancoFocusGained
 
+    /**
+     * Botão salvar, responsável por criar um arquivo .properties que será
+     * posteriormente utilizado para conectar ao banco de dados do usuário.
+     */
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-
         FileWriter fw = null;
+
         try {
 
             DBConnectionParams dBConnectionParams = new DBConnectionParams(
@@ -183,20 +204,13 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
                     jpfSenha.getText()
             );
 
-            File file = new File(System.getProperty("user.dir") + "\\src\\Resources\\dbconnection.properties");
+            fw = new FileWriter(Functions.getInstance().returnNewDbConnectionProperties());
 
-            if (file.exists()) {
-                file.delete();
-            }
-            
-            file.createNewFile();
-
-            fw = new FileWriter(file);
-
-            fw.append("#Parâmetros para conexão de banco\nurl="
+            fw.append("#Parametros para conexao de banco\nurl="
                     + dBConnectionParams.generateURL()
                     + "\nusuario=" + dBConnectionParams.getUsuario()
                     + "\nsenha=" + dBConnectionParams.getSenha());
+
             fw.flush();
 
         } catch (IOException ex) {
@@ -207,11 +221,21 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
             try {
                 fw.close();
 
+                JOptionPane.showMessageDialog(null, "Configuração de Banco de Dados salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                TelaLogin telaLogin = new TelaLogin();
+                telaLogin.setVisible(true);
+
+                dispose();
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbVerificarConexaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerificarConexaoActionPerformed
+        eSportBettingDAO.getInstance().realizarConexaoTeste(jtNomeBanco.getText(), Integer.parseInt(jtPortaBanco.getText()), jtUsuario.getText(), jpfSenha.getText());
+    }//GEN-LAST:event_jbVerificarConexaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,6 +279,7 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jbSalvar;
+    private javax.swing.JButton jbVerificarConexao;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JRadioButton jrbAlterarPortaBanco;
     private javax.swing.JTextField jtNomeBanco;

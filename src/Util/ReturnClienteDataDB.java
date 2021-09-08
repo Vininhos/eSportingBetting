@@ -1,4 +1,4 @@
-package Class;
+package Util;
 
 /**
  *
@@ -6,6 +6,7 @@ package Class;
  */
 public class ReturnClienteDataDB {
 
+    private String usuario;
     private String data_hora;
     private float saldoAntigo;
     private float novoSaldo;
@@ -14,6 +15,17 @@ public class ReturnClienteDataDB {
         this.data_hora = data_hora;
         this.saldoAntigo = saldoAntigo;
         this.novoSaldo = novoSaldo;
+    }
+
+    public ReturnClienteDataDB(String usuario, String data_hora, float saldoAntigo, float novoSaldo) {
+        this.usuario = usuario;
+        this.data_hora = data_hora;
+        this.saldoAntigo = saldoAntigo;
+        this.novoSaldo = novoSaldo;
+    }
+
+    public String getUsuario() {
+        return usuario;
     }
 
     public String getData_hora() {

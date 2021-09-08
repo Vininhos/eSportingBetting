@@ -1,7 +1,7 @@
 package Jframe;
 
-import Class.Administrador;
-import Class.Cliente;
+import Model.Administrador;
+import Model.Cliente;
 import DAO.eSportBettingDAO;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         initComponents();
         setLocationRelativeTo(this);
     }
-    FrameMenuPrincipal frameMenu = new FrameMenuPrincipal();
+    MenuPrincipal frameMenu = new MenuPrincipal();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -165,56 +165,63 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         System.exit(0);
     }//GEN-LAST:event_jbSairActionPerformed
 
-    //Realiza o login do usuário e seta o nome no menu principal.
+    /**
+     * Realiza o login do usuário e seta o nome no menu principal.
+     */
+    //
     private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
+        try {
+            if (jtUsuario.getText().length() < 0 || jtUsuario.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, digite um nome de usuário válido.");
 
-        if (jtUsuario.getText().length() < 0 || jtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, digite um nome de usuário válido.");
+            } else if (jpfSenha.getText().length() < 0 || jpfSenha.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, digite uma senha válida.");
 
-        } else if (jpfSenha.getText().length() < 0 || jpfSenha.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, digite uma senha válida.");
+            } else {
 
-        } else {
+                String result = eSportBettingDAO.getInstance().verificarLoginDAO(jtUsuario.getText(),
+                        jpfSenha.getText(), jcbTipoUsuario.getSelectedItem().toString());
 
-            String result = eSportBettingDAO.getInstance().verificarLoginDAO(jtUsuario.getText(),
-                    jpfSenha.getText(), jcbTipoUsuario.getSelectedItem().toString());
+                if (result != null || !result.isEmpty()) {
+                    dispose();
 
-            if (result != null) {
-                dispose();
+                    if (jcbTipoUsuario.getSelectedItem().toString() == "Cliente") {
+                        Cliente retCliente = eSportBettingDAO.getInstance().returnParametrosCliente(jtUsuario.getText(), jpfSenha.getText());
+                        Cliente cliente = new Cliente(retCliente.getUsuario(),
+                                retCliente.getSenha(),
+                                retCliente.getSaldo(),
+                                retCliente.getNome(),
+                                retCliente.getDataNascimento(),
+                                retCliente.getEmail(),
+                                retCliente.getCpf(),
+                                retCliente.getGenero());
 
-                if (jcbTipoUsuario.getSelectedItem().toString() == "Cliente") {
-                    Cliente retCliente = eSportBettingDAO.getInstance().returnParametrosCliente(jtUsuario.getText(), jpfSenha.getText());
-                    Cliente cliente = new Cliente(retCliente.getUsuario(),
-                            retCliente.getSenha(),
-                            retCliente.getSaldo(),
-                            retCliente.getNome(),
-                            retCliente.getDataNascimento(),
-                            retCliente.getEmail(),
-                            retCliente.getCpf(),
-                            retCliente.getGenero());
+                        frameMenu.carregarDadosUsuarioMenuPrincipal(cliente, null);
 
-                    frameMenu.carregarDadosUsuarioMenuPrincipal(cliente, null);
+                    } else {
+                        Administrador retAdmin = eSportBettingDAO.getInstance().returnParametrosAdministrador(jtUsuario.getText(),
+                                jpfSenha.getText());
+                        Administrador admin = new Administrador(retAdmin.getUsuario(),
+                                retAdmin.getSenha(),
+                                retAdmin.getNome(),
+                                retAdmin.getDataNascimento(),
+                                retAdmin.getEmail(),
+                                retAdmin.getCpf(),
+                                retAdmin.getGenero());
 
-                } else {
-                    Administrador retAdmin = eSportBettingDAO.getInstance().returnParametrosAdministrador(jtUsuario.getText(),
-                            jpfSenha.getText());
-                    Administrador admin = new Administrador(retAdmin.getUsuario(),
-                            retAdmin.getSenha(),
-                            retAdmin.getNome(),
-                            retAdmin.getDataNascimento(),
-                            retAdmin.getEmail(),
-                            retAdmin.getCpf(),
-                            retAdmin.getGenero());
+                        frameMenu.carregarDadosUsuarioMenuPrincipal(null, admin);
+                    }
 
-                    frameMenu.carregarDadosUsuarioMenuPrincipal(null, admin);
+                    frameMenu.setVisible(true);
+                    frameMenu.mudaNomeUsuario("Usuario atual: " + jtUsuario.getText());
+                    JOptionPane.showMessageDialog(this, "Bem-vindo, "
+                            + result + ". Você logou com sucesso!");
+
                 }
-
-                frameMenu.setVisible(true);
-                frameMenu.mudaNomeUsuario("Usuario atual: " + jtUsuario.getText());
-                JOptionPane.showMessageDialog(this, "Bem-vindo, "
-                        + result + ". Você logou com sucesso!");
-
             }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Não há nenhum cliente cadastrado com esse nome de usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbLogarActionPerformed
 
@@ -222,6 +229,11 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
 
     }//GEN-LAST:event_jbLogarKeyPressed
 
+    /**
+     * Cria uma nova instância do JFrame de cadastro, sendo ele de cliente ou de
+     * admin, caso o código "secreto" seja informado.
+     */
+    //
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         CadastroCliente cadCliente;
 

@@ -1,7 +1,7 @@
 package Jframe;
 
-import Class.Administrador;
-import Class.Functions;
+import Model.Administrador;
+import Util.Functions;
 import DAO.eSportBettingDAO;
 import javax.swing.JOptionPane;
 
@@ -12,13 +12,14 @@ public class CadastroAdmin extends javax.swing.JFrame {
      */
     public CadastroAdmin() {
         initComponents();
-        //apagaCampos();
         setLocationRelativeTo(this);
         jlDataNascimento.setVisible(false);
     }
 
-    //Método que apaga campos.
-    private void apagaCampos() {
+    /**
+     * Método que apaga campos.
+     */
+    private void limparCampos() {
         jtUsuario.setText("");
         jtCPF.setText("");
         jtEmail.setText("");
@@ -59,10 +60,6 @@ public class CadastroAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Admin");
         setResizable(false);
-
-        jtNome.setText("Adminnn");
-
-        jtEmail.setText("admin@admin.com.br");
 
         jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
@@ -108,14 +105,8 @@ public class CadastroAdmin extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Usuário:");
 
-        jpfSenha.setText("superadmin");
-
-        jtUsuario.setText("superamdin");
-
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setText("CPF:");
-
-        jtCPF.setText("07083749582");
 
         jlDataNascimento.setText("OBS: Informar data de nascimento no formato dia/mês/ano.");
         jlDataNascimento.setFocusable(false);
@@ -227,7 +218,10 @@ public class CadastroAdmin extends javax.swing.JFrame {
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
-    //Método responsável por serializar o cadastro do cliente.
+
+    /**
+     * Método responsável por serializar o cadastro do cliente.
+     */
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         try {
 
@@ -236,29 +230,35 @@ public class CadastroAdmin extends javax.swing.JFrame {
                     jpfSenha.getText(), jtCPF.getText(),
                     jtNascimento.getText())) {
 
-                Administrador admin = new Administrador(
-                        jtUsuario.getText(),
-                        jpfSenha.getText(),
-                        jtNome.getText(),
-                        Functions.getInstance().converterData(jtNascimento.getText()),
-                        jtEmail.getText(),
-                        jtCPF.getText(),
-                        jcbGenero.getSelectedItem().toString());
+                String adminExiste = eSportBettingDAO.getInstance().verificarLoginDAO(jtUsuario.getText(), jpfSenha.getText(), "Administrador");
 
-                int res = eSportBettingDAO.getInstance().adicionarAdminDAO(admin);
+                if (adminExiste == null || adminExiste.isEmpty()) {
+                    Administrador admin = new Administrador(
+                            jtUsuario.getText(),
+                            jpfSenha.getText(),
+                            jtNome.getText(),
+                            Functions.getInstance().converterData(jtNascimento.getText()),
+                            jtEmail.getText(),
+                            jtCPF.getText(),
+                            jcbGenero.getSelectedItem().toString());
 
-                if (res != 0) {
-                    JOptionPane.showMessageDialog(null,
-                            "Cadastro realizado com sucesso!",
-                            "Sucesso",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    int res = eSportBettingDAO.getInstance().adicionarAdminDAO(admin);
 
+                    if (res != 0) {
+                        JOptionPane.showMessageDialog(null,
+                                "Cadastro realizado com sucesso!",
+                                "Sucesso",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Aconteceu um erro ao cadastrar!",
+                                "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                    dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Aconteceu um erro ao cadastrar!",
-                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Já existe um administrador cadastrado com esse nome de usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-                dispose();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -271,7 +271,7 @@ public class CadastroAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jtNascimentoFocusGained
 
     private void jbLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparCamposActionPerformed
-        apagaCampos();
+        limparCampos();
     }//GEN-LAST:event_jbLimparCamposActionPerformed
 
     /**

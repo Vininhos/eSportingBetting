@@ -134,14 +134,8 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jtNome">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Adminnn"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtEmail">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="admin@admin.com.br"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jcbGenero">
       <Properties>
@@ -237,14 +231,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jpfSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="superadmin"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtUsuario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="superamdin"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
@@ -255,9 +243,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtCPF">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="07083749582"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlDataNascimento">
       <Properties>

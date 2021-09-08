@@ -1,7 +1,7 @@
 package Jframe;
 
-import Class.Cliente;
-import Class.Functions;
+import Model.Cliente;
+import Util.Functions;
 import DAO.eSportBettingDAO;
 
 import javax.swing.JOptionPane;
@@ -14,8 +14,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jlDataNascimento.setVisible(false);
     }
 
-    //Método que apaga campos.
-    private void apagaCampos() {
+    /**
+     * Método para apagar campos.
+     */
+    private void limparCampos() {
         jtUsuario.setText("");
         jtCPF.setText("");
         jtNascimento.setText("");
@@ -69,10 +71,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Nome:");
 
-        jtNome.setText("Testador");
-
-        jtEmail.setText("vini@email.com");
-
         jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
         jbFechar.setText("Fechar");
@@ -95,14 +93,14 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Usuário:");
 
-        jpfSenha.setText("123");
-
-        jtUsuario.setText("usuario123");
+        jpfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpfSenhaActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("CPF:");
-
-        jtCPF.setText("0703633113");
 
         jlDataNascimento.setText("OBS: Informar data de nascimento no formato dia/mês/ano.");
         jlDataNascimento.setFocusable(false);
@@ -227,7 +225,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
 
-    //Método responsável por serializar o cadastro do cliente.
+    /**
+     * Método responsável por serializar o cadastro do cliente.
+     */
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         try {
             if (Functions.getInstance().verificaCampos(jtNome.getText(),
@@ -235,30 +235,37 @@ public class CadastroCliente extends javax.swing.JFrame {
                     jpfSenha.getText(), jtCPF.getText(),
                     jtNascimento.getText())) {
 
-                Cliente cliente = new Cliente(
-                        jtUsuario.getText(),
-                        jpfSenha.getText(),
-                        jtNome.getText(),
-                        Functions.getInstance().converterData(jtNascimento.getText()),
-                        jtEmail.getText(),
-                        jtCPF.getText(),
-                        jcbGenero.getSelectedItem().toString());
+                String clienteExiste = eSportBettingDAO.getInstance().verificarLoginDAO(jtUsuario.getText(), jpfSenha.getText(), "Cliente");
 
-                int res = eSportBettingDAO.getInstance().adicionarClienteDAO(cliente);
+                if (clienteExiste == null || clienteExiste.isEmpty()) {
+                    Cliente cliente = new Cliente(
+                            jtUsuario.getText(),
+                            jpfSenha.getText(),
+                            jtNome.getText(),
+                            Functions.getInstance().converterData(jtNascimento.getText()),
+                            jtEmail.getText(),
+                            jtCPF.getText(),
+                            jcbGenero.getSelectedItem().toString());
 
-                if (res != 0) {
-                    JOptionPane.showMessageDialog(null,
-                            "Cadastro realizado com sucesso!",
-                            "Sucesso",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    int res = eSportBettingDAO.getInstance().adicionarClienteDAO(cliente);
+
+                    if (res != 0) {
+                        JOptionPane.showMessageDialog(null,
+                                "Cadastro realizado com sucesso!",
+                                "Sucesso",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Aconteceu um erro ao cadastrar!",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    dispose();
 
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Aconteceu um erro ao cadastrar!",
-                            "Erro",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Já existe um cliente cadastrado com esse nome de usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-                dispose();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -276,8 +283,12 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtNascimentoFocusGained
 
     private void jbApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApagarCamposActionPerformed
-        apagaCampos();
+        limparCampos();
     }//GEN-LAST:event_jbApagarCamposActionPerformed
+
+    private void jpfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpfSenhaActionPerformed
+
+    }//GEN-LAST:event_jpfSenhaActionPerformed
 
     /**
      * @param args the command line arguments

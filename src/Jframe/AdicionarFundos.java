@@ -12,6 +12,7 @@ public class AdicionarFundos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
     }
+
     String usuario;
 
     public void setUsuario(String usuario) {
@@ -22,13 +23,16 @@ public class AdicionarFundos extends javax.swing.JFrame {
     //o cliente adicionou.
     public void adicionaValorFundosAtual(String usuario) {
         if (jtNumeroCartao.getText().length() < 16 || jtNumeroCartao.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite 16 números para o número do cartão.");
+            JOptionPane.showMessageDialog(this, "Digite 16 números para o número do cartão.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else if (jtCodVerificador.getText().length() < 3 || jtCodVerificador.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite 3 números para o código verificador.");
+            JOptionPane.showMessageDialog(this, "Digite 3 números para o código verificador.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        } else if (jtTitularCartao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite um nome de titular do cartão válido.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else if (jtValor.getText().isEmpty() || Integer.parseInt(jtValor.getText()) == 0) {
-            JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor");
+            JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else {
             JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!");
@@ -57,6 +61,8 @@ public class AdicionarFundos extends javax.swing.JFrame {
         jtValor = new javax.swing.JTextField();
         jbAdicionarFundos = new javax.swing.JButton();
         jbFechar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jtTitularCartao = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Fundos");
@@ -67,7 +73,6 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel2.setText("Número do Cartão:");
 
-        jtNumeroCartao.setText("1234567891234567");
         jtNumeroCartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtNumeroCartaoActionPerformed(evt);
@@ -81,7 +86,6 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel3.setText("Código verificador:");
 
-        jtCodVerificador.setText("123");
         jtCodVerificador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtCodVerificadorActionPerformed(evt);
@@ -101,8 +105,6 @@ public class AdicionarFundos extends javax.swing.JFrame {
 
         jLabel4.setText("Valor:");
 
-        jtValor.setText("300");
-
         jbAdicionarFundos.setText("Alimentar o Capitalismo");
         jbAdicionarFundos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,6 +118,8 @@ public class AdicionarFundos extends javax.swing.JFrame {
                 jbFecharActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("Titular do Cartão:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,7 +146,11 @@ public class AdicionarFundos extends javax.swing.JFrame {
                         .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(56, 56, 56)))
+                        .addGap(56, 56, 56))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtTitularCartao)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -156,13 +164,17 @@ public class AdicionarFundos extends javax.swing.JFrame {
                     .addComponent(jtNumeroCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtTitularCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtCodVerificador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAdicionarFundos)
                     .addComponent(jbFechar))
@@ -253,10 +265,12 @@ public class AdicionarFundos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jbAdicionarFundos;
     private javax.swing.JButton jbFechar;
     private javax.swing.JTextField jtCodVerificador;
     private javax.swing.JTextField jtNumeroCartao;
+    private javax.swing.JTextField jtTitularCartao;
     private javax.swing.JTextField jtValor;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,43 +1,52 @@
 package Jframe;
 
-import Class.Administrador;
-import Class.Cliente;
-import Class.Functions;
-import Class.ReturnClienteDataDB;
+import Model.Administrador;
+import Model.Cliente;
+import Util.Functions;
 import DAO.eSportBettingDAO;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class FrameMenuPrincipal extends javax.swing.JFrame {
+public class MenuPrincipal extends javax.swing.JFrame {
 
-    public FrameMenuPrincipal() {
-        initComponents();
-        setLocationRelativeTo(this);
-        jmiGerarFundos.setVisible(false);
-    }
     float saldoNovo = 0;
     String usuario;
+
     ApostaDoDiaRocketLeague frameRocketLeague = new ApostaDoDiaRocketLeague();
 
-    public void ativaPrivilegiosAdministrador() {
-        jmiGerarFundos.setVisible(true);
+    public MenuPrincipal() {
+        initComponents();
+        setLocationRelativeTo(this);
+        jmiGerarRelatorioTodosUsuarios.setVisible(false);
+        jmCadastros.setVisible(false);
     }
 
+    /**
+     * Método responsável por ativar privilégio de admin caso seja feito login
+     * pelo mesmo na tela de login.
+     */
+    public void ativaPrivilegiosAdministrador() {
+        jmiGerarRelatorioTodosUsuarios.setVisible(true);
+        jmCadastros.setVisible(true);
+    }
+
+    /**
+     * Metódo utilizado pelo JFrame "TelaLogin", responsável por carregar um
+     * tipo Cliente ou Admin, com base no escolhido no mesmo, carregando os
+     * dados do banco de dados.
+     *
+     * @param cliente Caso seja selecionado o login de Cliente, esse parâmetro
+     * será preenchido.
+     * @param admin Caso seja selecionado o login de Admin, esse parâmetro será
+     * preenchido.
+     *
+     */
     public void carregarDadosUsuarioMenuPrincipal(Cliente cliente, Administrador admin) {
         if (cliente != null) {
             jmUsuario.setText(cliente.getNome());
-            jmSaldoAtual.setText(cliente.getSaldo() + "");
+            jmSaldoAtual.setText("R$" + cliente.getSaldo());
             usuario = cliente.getUsuario();
             jmCadastros.setVisible(false);
+
         } else {
             jmUsuario.setText(admin.getNome());
             ativaPrivilegiosAdministrador();
@@ -61,7 +70,6 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmiRocketLeague = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jmiAdicionarFundos = new javax.swing.JMenuItem();
-        jmiGerarFundos = new javax.swing.JMenuItem();
         jmiAtualizar2 = new javax.swing.JMenuItem();
         jmiDeslogar = new javax.swing.JMenuItem();
         jmUsuario = new javax.swing.JMenu();
@@ -72,7 +80,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         jmiCadCliente = new javax.swing.JMenuItem();
         jmiCadAdmin = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jmiGerarRelatorio = new javax.swing.JMenuItem();
+        jmiGerarRelatorioUsuario = new javax.swing.JMenuItem();
+        jmiGerarRelatorioTodosUsuarios = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -119,15 +128,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jmiAdicionarFundos);
 
-        jmiGerarFundos.setText("Gerar Milhões de Bolsonaros (ADM)");
-        jmiGerarFundos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiGerarFundosActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jmiGerarFundos);
-
-        jmiAtualizar2.setText("Atualizar");
+        jmiAtualizar2.setText("Atualizar Dinheiros");
         jmiAtualizar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiAtualizar2ActionPerformed(evt);
@@ -150,7 +151,7 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Dinheiros:");
 
-        jmiAtualizar.setText("Atualizar");
+        jmiAtualizar.setText("Atualizar Dinheiros");
         jmiAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiAtualizarActionPerformed(evt);
@@ -185,13 +186,21 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Relatórios");
 
-        jmiGerarRelatorio.setText("Gerar relatório geral do usuário");
-        jmiGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+        jmiGerarRelatorioUsuario.setText("Gerar relatório geral de apostas e depósitos do usuário");
+        jmiGerarRelatorioUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiGerarRelatorioActionPerformed(evt);
+                jmiGerarRelatorioUsuarioActionPerformed(evt);
             }
         });
-        jMenu1.add(jmiGerarRelatorio);
+        jMenu1.add(jmiGerarRelatorioUsuario);
+
+        jmiGerarRelatorioTodosUsuarios.setText("Gerar relatório de todos os usuários (ADM)");
+        jmiGerarRelatorioTodosUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGerarRelatorioTodosUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiGerarRelatorioTodosUsuarios);
 
         jMenuBar1.add(jMenu1);
 
@@ -216,17 +225,26 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
         cadCliente.setVisible(true);
     }//GEN-LAST:event_jmiCadClienteActionPerformed
 
+    /**
+     * Método responsável por gerar um novo JFrame com a cadastrar um novo usuário (EXCLUSIVO PARA ADM)
+     * fundos para a conta do usuário.
+     */
     private void jmiCadAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadAdminActionPerformed
-        String comparador = JOptionPane.showInputDialog(
-                "Digite o código secreto para se cadastrar como admin... (Psiu, o código é: tiorenas)");
-        if (comparador.equalsIgnoreCase("tiorenas")) {
+        String comparador = JOptionPane.showInputDialog("Digite o código secreto para se cadastrar como admin... (Psiu, o código é: deusnato)");
+
+        if (comparador.equalsIgnoreCase("deusnato")) {
             CadastroAdmin cadAdmin = new CadastroAdmin();
             cadAdmin.setVisible(true);
+
         } else {
             JOptionPane.showMessageDialog(this, "ERROOOOOOOOU!");
         }
     }//GEN-LAST:event_jmiCadAdminActionPerformed
 
+    /**
+     * Todos os parâmetros do JFrame "ApostaRocketLeague" será inicializado por
+     * aqui, carregando dados de saldo do cliente.
+     */
     private void jmiRocketLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRocketLeagueActionPerformed
         frameRocketLeague = new ApostaDoDiaRocketLeague();
         frameRocketLeague.setVisible(true);
@@ -239,70 +257,65 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
 
         } else {
             frameRocketLeague.setaSaldoAtual(0);
+
         }
         frameRocketLeague.setaUsuarioAtual(usuario);
 
     }//GEN-LAST:event_jmiRocketLeagueActionPerformed
 
+    /**
+     * Método responsável por gerar um novo JFrame com a finalidade de adicionar
+     * fundos para a conta do usuário.
+     */
     private void jmiAdicionarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAdicionarFundosActionPerformed
         AdicionarFundos frameAdicionarFundos = new AdicionarFundos();
         frameAdicionarFundos.setVisible(true);
         frameAdicionarFundos.setUsuario(usuario);
     }//GEN-LAST:event_jmiAdicionarFundosActionPerformed
 
-    private void jmiGerarFundosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarFundosActionPerformed
-        jmSaldoAtual.setText("99999999");
-    }//GEN-LAST:event_jmiGerarFundosActionPerformed
-
-    //Método responsável por atualizar o saldo no menu principal.
+    /**
+     * Método responsável por atualizar o saldo no menu principal.
+     */
     private void jmiAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizarActionPerformed
         saldoNovo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
-        jmSaldoAtual.setText(saldoNovo + "");
+        jmSaldoAtual.setText("R$" + saldoNovo);
     }//GEN-LAST:event_jmiAtualizarActionPerformed
 
+    /**
+     * Método responsável por deslogar o usuário atual.
+     */
     private void jmiDeslogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDeslogarActionPerformed
         dispose();
         TelaLogin frameLogin = new TelaLogin();
         frameLogin.setVisible(true);
     }//GEN-LAST:event_jmiDeslogarActionPerformed
 
+    /**
+     * Método responsável por atualizar o saldo no menu principal.
+     */
     private void jmiAtualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAtualizar2ActionPerformed
         saldoNovo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
-        jmSaldoAtual.setText(saldoNovo + "");
+        jmSaldoAtual.setText("R$" + saldoNovo);
     }//GEN-LAST:event_jmiAtualizar2ActionPerformed
 
-    private void jmiGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarRelatorioActionPerformed
-        try {
+    /**
+     * Método responsável por gerar um relatório do usuário atual que está
+     * logado.
+     */
+    private void jmiGerarRelatorioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarRelatorioUsuarioActionPerformed
+        Functions.getInstance().generatePDFCliente(usuario);
+    }//GEN-LAST:event_jmiGerarRelatorioUsuarioActionPerformed
 
-            Document pdf = new Document();
+    /**
+     * Método responsável por gerar um relatório geral de todos os clientes. (EXCLUSIVO PARA ADM)
+     */
+    private void jmiGerarRelatorioTodosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarRelatorioTodosUsuariosActionPerformed
+        Functions.getInstance().generatePDFCliente("");
+    }//GEN-LAST:event_jmiGerarRelatorioTodosUsuariosActionPerformed
 
-            ArrayList<String> retProcessedCliente = Functions.getInstance().gerarStringPDFCliente(eSportBettingDAO.getInstance().retornaDadosClienteParaRelatorio(usuario));
-
-            PdfWriter.getInstance(pdf, new FileOutputStream(System.getProperty("user.dir") + "\\Relatorios\\Relatorio" + usuario + ".pdf"));
-
-            pdf.open();
-
-            pdf.addTitle("Relatório do usuário " + usuario);
-            pdf.addAuthor("eSportingBetting");
-            pdf.add(new Paragraph("Relatório do Usuário: " + usuario, new Font(Font.FontFamily.TIMES_ROMAN, 16)));
-            pdf.add(new Paragraph("\n\nSuas transações:\n"));
-
-            for (String dadosClienteProcessados : retProcessedCliente) {
-                pdf.add(new Paragraph(dadosClienteProcessados));
-            }
-
-            pdf.close();
-
-            JOptionPane.showMessageDialog(null,
-                    "O Relatório PDF foi gerado no diretório onde está localizado o eSportingBetting. (diretório do projeto)",
-                    "Relatório Gerado", JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (FileNotFoundException | DocumentException ex) {
-            ex.printStackTrace();
-        }
-    }//GEN-LAST:event_jmiGerarRelatorioActionPerformed
-
-    //Muda o nome do usuário no menu para o que foi cadastrado.
+    /**
+     * Muda o nome do usuário no menu para o que foi cadastrado.
+     */
     public void mudaNomeUsuario(String usuario) {
         jmUsuario.setText(usuario);
     }
@@ -324,20 +337,21 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameMenuPrincipal().setVisible(true);
+                new MenuPrincipal().setVisible(true);
             }
         });
     }
@@ -360,8 +374,8 @@ public class FrameMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiCadAdmin;
     private javax.swing.JMenuItem jmiCadCliente;
     private javax.swing.JMenuItem jmiDeslogar;
-    private javax.swing.JMenuItem jmiGerarFundos;
-    private javax.swing.JMenuItem jmiGerarRelatorio;
+    private javax.swing.JMenuItem jmiGerarRelatorioTodosUsuarios;
+    private javax.swing.JMenuItem jmiGerarRelatorioUsuario;
     private javax.swing.JMenuItem jmiRocketLeague;
     // End of variables declaration//GEN-END:variables
 }

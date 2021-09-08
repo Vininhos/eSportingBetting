@@ -53,6 +53,11 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jtTitularCartao" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
@@ -70,6 +75,11 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtTitularCartao" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jtCodVerificador" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -78,7 +88,7 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jtValor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbAdicionarFundos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbFechar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -103,9 +113,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtNumeroCartao">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="1234567891234567"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtNumeroCartaoActionPerformed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtNumeroCartaoKeyReleased"/>
@@ -117,9 +124,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtCodVerificador">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="123"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtCodVerificadorActionPerformed"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtCodVerificadorKeyPressed"/>
@@ -133,9 +137,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtValor">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="300"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbAdicionarFundos">
       <Properties>
@@ -152,6 +153,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbFecharActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Titular do Cart&#xe3;o:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtTitularCartao">
     </Component>
   </SubComponents>
 </Form>
