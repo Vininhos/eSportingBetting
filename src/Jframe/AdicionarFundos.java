@@ -35,7 +35,7 @@ public class AdicionarFundos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Digite um valor válido para o valor", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else {
-            JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!");
+            JOptionPane.showMessageDialog(this, "Fundos adicionados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             float saldo = eSportBettingDAO.getInstance().retornaSaldoCliente(usuario);
             saldo += Float.parseFloat(jtValor.getText());
             eSportBettingDAO.getInstance().alteraSaldoCliente(usuario, saldo);

@@ -30,6 +30,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jcbTipoUsuario = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jbCadastrar = new javax.swing.JButton();
+        jbConfiguracoesBD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bem-vindo ao eSportBetting");
@@ -45,7 +46,6 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Usuário:");
 
-        jtUsuario.setText("Vinicius");
         jtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtUsuarioKeyPressed(evt);
@@ -74,7 +74,6 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Senha:");
 
-        jpfSenha.setText("123");
         jpfSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jpfSenhaKeyPressed(evt);
@@ -95,19 +94,30 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        jbConfiguracoesBD.setText("Configurações de BD");
+        jbConfiguracoesBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbConfiguracoesBDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                        .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbConfiguracoesBD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(jbCadastrar))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel1)
                                 .addGroup(layout.createSequentialGroup()
@@ -119,13 +129,15 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jtUsuario)
                                         .addComponent(jpfSenha)
-                                        .addComponent(jcbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jbLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                        .addComponent(jcbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel5)))
+                        .addGap(51, 51, 51))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jbCadastrar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbLogar, jbSair});
@@ -154,7 +166,8 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSair)
-                    .addComponent(jbLogar))
+                    .addComponent(jbLogar)
+                    .addComponent(jbConfiguracoesBD))
                 .addGap(27, 27, 27))
         );
 
@@ -280,6 +293,11 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jtUsuarioKeyPressed
 
+    private void jbConfiguracoesBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfiguracoesBDActionPerformed
+        ConexaoComBancoSQL frame = new ConexaoComBancoSQL();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jbConfiguracoesBDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -322,6 +340,7 @@ public class TelaLogin extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jbCadastrar;
+    private javax.swing.JButton jbConfiguracoesBD;
     private javax.swing.JButton jbLogar;
     private javax.swing.JButton jbSair;
     private javax.swing.JComboBox<String> jcbTipoUsuario;

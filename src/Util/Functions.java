@@ -1,18 +1,22 @@
 package Util;
 
 import DAO.eSportBettingDAO;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Functions {
@@ -67,7 +71,7 @@ public class Functions {
      * diversas verificações para garantir dados corretos.
      */
     public boolean verificaCampos(String nome, String email, String usuario, String senha, String cpf, String nascimento) {
-        if (nome.length() < 3 || nome.length() > 30 || nome.isEmpty() || !nome.matches("[a-zA-Z]+")) {
+        if (nome.length() < 3 || nome.length() > 30 || nome.isEmpty() || !nome.matches("([a-zA-Z]+)([\\s])?([a-zA-Z]*)?([\\s]?)([a-zA-Z]*)?([\\s])?")) {
             JOptionPane.showMessageDialog(null, "Por favor, digite um nome válido. Máximo de 30 caracteres e no mínimo 3.", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -127,10 +131,10 @@ public class Functions {
             saldoAntigo = clienteData.getSaldoAntigo();
             saldoNovo = clienteData.getNovoSaldo();
 
-            resultBuilder.add("Aposta realizada na seguinte data e hora: " + dataHora
-                    + "\nSeu saldo antes da aposta: "
-                    + saldoAntigo + "\nSeu saldo após a aposta: " + saldoNovo
-                    + "\nLucro: " + (saldoNovo - saldoAntigo) + "\n\n");
+            resultBuilder.add("Aposta/Depósito realizada na seguinte data e hora: " + dataHora
+                    + "\nSeu saldo antes da aposta/depósito: "
+                    + saldoAntigo + "\nSeu saldo após a aposta/depósito: " + saldoNovo
+                    + "\nLucro/depósito: " + (saldoNovo - saldoAntigo) + "\n\n");
 
         }
 
@@ -152,27 +156,32 @@ public class Functions {
             Document pdf = new Document();
             String targetDirectory = System.getProperty("user.dir") + "\\Relatorios";
 
-            PdfWriter.getInstance(pdf, new FileOutputStream(targetDirectory + "\\Relatorio" + usuario + ".pdf"));
+            PdfWriter.getInstance(pdf, new FileOutputStream(targetDirectory + "\\Relatorio Geral " + usuario + ".pdf"));
 
             pdf.open();
 
             ArrayList<String> retProcessedCliente = null;
 
             if (usuario.isEmpty()) {
-                usuario = "";
-                pdf.addTitle("Relatório dos usuários:");
+                pdf.addTitle("Relatório dos usuários");
 
                 retProcessedCliente = Functions.getInstance().generateStringPDFCliente(
-                        eSportBettingDAO.getInstance().retornaDadosClienteRelatorio(usuario));
+                        eSportBettingDAO.getInstance().retornaTodosOsDadosClientesRelatorio());
+
+                pdf.add(new Paragraph("Relatório de todos os usuários:", FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLD, BaseColor.BLACK)));
 
             } else {
                 pdf.addTitle("Relatório do usuário " + usuario);
 
                 retProcessedCliente = Functions.getInstance().generateStringPDFCliente(
-                        eSportBettingDAO.getInstance().retornaTodosOsDadosClientesRelatorio());
+                        eSportBettingDAO.getInstance().retornaDadosClienteRelatorio(usuario));
+
+                String paragrafo = "Relatório do usuário " + usuario;
+                pdf.add(new Paragraph(paragrafo, FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLD, BaseColor.BLACK)));
             }
 
             pdf.addAuthor("eSportingBetting");
+
             pdf.add(new Paragraph("\nTransações:\n"));
 
             for (String dadosClienteProcessados : retProcessedCliente) {
@@ -196,12 +205,20 @@ public class Functions {
      * Método responsável por verificar se o arquivo .properties do banco de
      * dados existe.
      *
-     * @return retorna true ou false para verificar se esse arquivo existe.
      */
-    public boolean verifyIfDBConnectionPropertiesExists() {
-        File file = new File(System.getProperty("user.dir") + "\\src\\Resources\\dbconnection.properties");
+    public void createDBConnectionProperties() {
 
-        return file.exists();
+        try {
+            File dbProp = new File(System.getProperty("user.dir") + "\\src\\Resources\\dbconnection.properties");
+
+            if (!dbProp.exists()) {
+                dbProp.createNewFile();
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -226,5 +243,34 @@ public class Functions {
             ex.printStackTrace();
         }
         return file;
+    }
+
+    /**
+     * Método responsável por criar um diretório para armazenar o arquivo
+     * .properties, caso não exista.
+     *
+     * @return true se o diretório já existe, falso se não existir.
+     */
+    public boolean createDirIfDbPropertiesDirNotExists() {
+        File dbPropertiesDir = new File(System.getProperty("user.dir") + "\\src\\Resources");
+
+        if (!dbPropertiesDir.exists()) {
+            dbPropertiesDir.mkdir();
+            createDBConnectionProperties();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metódo responsável por criar um diretório para os relatórios, caso o
+     * mesmo não exista.
+     */
+    public void createDirRelatorio() {
+        File relatorioDir = new File(System.getProperty("user.dir") + "\\Relatorios");
+
+        if (!relatorioDir.exists()) {
+            relatorioDir.mkdir();
+        }
     }
 }

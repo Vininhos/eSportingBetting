@@ -329,7 +329,7 @@ public class ApostaDoDiaRocketLeague extends javax.swing.JFrame {
      */
     private void tocaSomFimPartida() {
         try {
-            FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\SonsRL\\endgame\\endgame.mp3");
+            FileInputStream arquivoInputStream = new FileInputStream(System.getProperty("user.dir") + "\\endgameSound\\endgame.mp3");
 
             Player tocador = new Player(arquivoInputStream);
 

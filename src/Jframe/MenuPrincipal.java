@@ -18,6 +18,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         jmiGerarRelatorioTodosUsuarios.setVisible(false);
         jmCadastros.setVisible(false);
+        Functions.getInstance().createDirRelatorio();
     }
 
     /**
@@ -226,8 +227,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiCadClienteActionPerformed
 
     /**
-     * Método responsável por gerar um novo JFrame com a cadastrar um novo usuário (EXCLUSIVO PARA ADM)
-     * fundos para a conta do usuário.
+     * Método responsável por gerar um novo JFrame com a cadastrar um novo
+     * usuário (EXCLUSIVO PARA ADM) fundos para a conta do usuário.
      */
     private void jmiCadAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadAdminActionPerformed
         String comparador = JOptionPane.showInputDialog("Digite o código secreto para se cadastrar como admin... (Psiu, o código é: deusnato)");
@@ -307,7 +308,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiGerarRelatorioUsuarioActionPerformed
 
     /**
-     * Método responsável por gerar um relatório geral de todos os clientes. (EXCLUSIVO PARA ADM)
+     * Método responsável por gerar um relatório geral de todos os clientes.
+     * (EXCLUSIVO PARA ADM)
      */
     private void jmiGerarRelatorioTodosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGerarRelatorioTodosUsuariosActionPerformed
         Functions.getInstance().generatePDFCliente("");

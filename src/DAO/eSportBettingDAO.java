@@ -20,12 +20,8 @@ public class eSportBettingDAO {
     private Connection con;
 
     PropertiesHandler propertiesHandler = new PropertiesHandler();
-    ArrayList<String> dbParams = propertiesHandler.getParamsDBConnectionProperties();
 
     public eSportBettingDAO() {
-        url = dbParams.get(0);
-        usuario = dbParams.get(1);
-        senha = dbParams.get(2);
     }
 
     private static eSportBettingDAO INSTANCE;
@@ -76,6 +72,11 @@ public class eSportBettingDAO {
     public void iniciarConexao() {
         try {
             if (!verificaConexao()) {
+                ArrayList<String> dbParams = propertiesHandler.getParamsDBConnectionProperties();
+                url = dbParams.get(0);
+                usuario = dbParams.get(1);
+                senha = dbParams.get(2);
+
                 Class.forName("org.postgresql.Driver");
 
                 con = DriverManager.getConnection(url, usuario, senha);
@@ -406,46 +407,27 @@ public class eSportBettingDAO {
             Statement statement = con.createStatement();
             ReturnClienteDataDB returnCliente = null;
             String query = null;
-            boolean shouldReadUsuario;
 
             if (usuario.isEmpty()) {
                 query = "select usuario, substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente order by data_hora asc";
-                shouldReadUsuario = true;
 
             } else {
-                query = "select substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente where usuario = '"
+                query = "select usuario, substring(cast(data_hora as varchar), 0, 20) as data_hora, saldoantigo, novosaldo from auditacliente where usuario = '"
                         + usuario + "' and operacao = 'UPDATE';";
-                shouldReadUsuario = false;
             }
 
             ResultSet res = statement.executeQuery(query);
             ArrayList<ReturnClienteDataDB> dadosCliente = new ArrayList<>();
 
-            if (shouldReadUsuario) {
+            while (res.next()) {
+                returnCliente = new ReturnClienteDataDB(
+                        res.getString("usuario"),
+                        res.getString("data_hora"),
+                        res.getFloat("saldoantigo"),
+                        res.getFloat("novosaldo")
+                );
 
-                while (res.next()) {
-                    returnCliente = new ReturnClienteDataDB(
-                            res.getString("usuario"),
-                            res.getString("data_hora"),
-                            res.getFloat("saldoantigo"),
-                            res.getFloat("novosaldo")
-                    );
-
-                    dadosCliente.add(returnCliente);
-                }
-
-            } else {
-
-                while (res.next()) {
-                    returnCliente = new ReturnClienteDataDB(
-                            res.getString("usuario"),
-                            res.getString("data_hora"),
-                            res.getFloat("saldoantigo"),
-                            res.getFloat("novosaldo")
-                    );
-
-                    dadosCliente.add(returnCliente);
-                }
+                dadosCliente.add(returnCliente);
             }
 
             con.close();
