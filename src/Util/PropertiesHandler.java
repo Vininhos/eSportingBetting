@@ -22,6 +22,7 @@ public class PropertiesHandler {
         try {
 
             Properties properties = new Properties();
+
             FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\Resources\\dbconnection.properties");
 
             properties.load(fis);
@@ -31,6 +32,8 @@ public class PropertiesHandler {
             result.add(properties.getProperty("url"));
             result.add(properties.getProperty("usuario"));
             result.add(properties.getProperty("senha"));
+
+            fis.close();
 
             return result;
 

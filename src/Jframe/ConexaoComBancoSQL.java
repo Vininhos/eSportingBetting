@@ -24,6 +24,7 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
     public ConexaoComBancoSQL() {
         initComponents();
         setLocationRelativeTo(this);
+        Functions.getInstance().createDBConnectionProperties();
     }
 
     /**
@@ -177,6 +178,7 @@ public class ConexaoComBancoSQL extends javax.swing.JFrame {
         if (jrbAlterarPortaBanco.isSelected()) {
             jtPortaBanco.setEnabled(true);
             jtPortaBanco.setText("");
+
         } else {
             jtPortaBanco.setEnabled(false);
             jtPortaBanco.setText("5432");
