@@ -45,6 +45,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAtualizar2ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiPesquisaSatisfacaoCliente">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pesquisa de Satisfa&#xe7;&#xe3;o"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiPesquisaSatisfacaoClienteActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiDeslogar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deslogar"/>
@@ -122,6 +130,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiGerarRelatorioTodosUsuariosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiPesquisaSatisfacao">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Visualizar Pesquisa Satisfa&#xe7;&#xe3;o (ADM)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiPesquisaSatisfacaoActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

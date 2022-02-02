@@ -4,7 +4,11 @@ import Model.Administrador;
 import Model.Cliente;
 import Util.Functions;
 import DAO.eSportBettingDAO;
+import Model.PesquisaSatisfacaoObject;
 import javax.swing.JOptionPane;
+import net.sourceforge.jFuzzyLogic.FIS;
+import net.sourceforge.jFuzzyLogic.FunctionBlock;
+import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
@@ -18,6 +22,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         jmiGerarRelatorioTodosUsuarios.setVisible(false);
         jmCadastros.setVisible(false);
+        jmiPesquisaSatisfacao.setVisible(false);
         Functions.getInstance().createDirRelatorio();
     }
 
@@ -28,6 +33,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public void ativaPrivilegiosAdministrador() {
         jmiGerarRelatorioTodosUsuarios.setVisible(true);
         jmCadastros.setVisible(true);
+        jmiPesquisaSatisfacao.setVisible(true);
     }
 
     /**
@@ -72,6 +78,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jmiAdicionarFundos = new javax.swing.JMenuItem();
         jmiAtualizar2 = new javax.swing.JMenuItem();
+        jmiPesquisaSatisfacaoCliente = new javax.swing.JMenuItem();
         jmiDeslogar = new javax.swing.JMenuItem();
         jmUsuario = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -83,6 +90,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jmiGerarRelatorioUsuario = new javax.swing.JMenuItem();
         jmiGerarRelatorioTodosUsuarios = new javax.swing.JMenuItem();
+        jmiPesquisaSatisfacao = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -136,6 +144,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jmiAtualizar2);
+
+        jmiPesquisaSatisfacaoCliente.setText("Pesquisa de Satisfação");
+        jmiPesquisaSatisfacaoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPesquisaSatisfacaoClienteActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmiPesquisaSatisfacaoCliente);
 
         jmiDeslogar.setText("Deslogar");
         jmiDeslogar.addActionListener(new java.awt.event.ActionListener() {
@@ -203,6 +219,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jmiGerarRelatorioTodosUsuarios);
 
+        jmiPesquisaSatisfacao.setText("Visualizar Pesquisa Satisfação (ADM)");
+        jmiPesquisaSatisfacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPesquisaSatisfacaoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiPesquisaSatisfacao);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -232,7 +256,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void jmiCadAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadAdminActionPerformed
         String comparador = JOptionPane.showInputDialog("Digite o código secreto para se cadastrar como admin... (Psiu, o código é: deusnato)");
-
+//capturar os dados do banco para depois usar o mesmo no fcl
         if (comparador.equalsIgnoreCase("deusnato")) {
             CadastroAdmin cadAdmin = new CadastroAdmin();
             cadAdmin.setVisible(true);
@@ -315,6 +339,44 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Functions.getInstance().generatePDFCliente("");
     }//GEN-LAST:event_jmiGerarRelatorioTodosUsuariosActionPerformed
 
+    private void jmiPesquisaSatisfacaoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaSatisfacaoClienteActionPerformed
+        PesquisaSatisfacao pesquisaSatisfacao = new PesquisaSatisfacao();
+        pesquisaSatisfacao.adicionarUsuario(usuario);
+        pesquisaSatisfacao.setVisible(true);
+    }//GEN-LAST:event_jmiPesquisaSatisfacaoClienteActionPerformed
+
+    private void jmiPesquisaSatisfacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPesquisaSatisfacaoActionPerformed
+        try {
+            String filename = System.getProperty("user.dir") + "\\jfuzzy\\esportbetting.fcl";
+            FIS fis = FIS.load(filename, true);
+
+            JFuzzyChart.get().chart(fis);
+
+            FunctionBlock fb = fis.getFunctionBlock(null);
+
+            int qtdRegistrosPequisa = eSportBettingDAO.getInstance().returnQtdRegistrosPesquisaSatisfacao();
+
+            PesquisaSatisfacaoObject pso = eSportBettingDAO.getInstance().returnDadosPesquisaSatisfacao();
+
+            fb.setVariable("pontosPergunta1", pso.getPontosPergunta1() / qtdRegistrosPequisa);
+            fb.setVariable("pontosPergunta2", pso.getPontosPergunta2() / qtdRegistrosPequisa);
+            fb.setVariable("pontosPergunta3", pso.getPontosPergunta3() / qtdRegistrosPequisa);
+            fb.setVariable("pontosPergunta4", pso.getPontosPergunta4() / qtdRegistrosPequisa);
+            fb.setVariable("pontosPergunta5", pso.getPontosPergunta5() / qtdRegistrosPequisa);
+
+            fb.evaluate();
+
+            fb.getVariable("notaFinal").defuzzify();
+
+            System.out.println("notaFinal: " + fb.getVariable("notaFinal").getValue());
+
+            JFuzzyChart.get().chart(fb.getVariable("notaFinal"), true);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jmiPesquisaSatisfacaoActionPerformed
+
     /**
      * Muda o nome do usuário no menu para o que foi cadastrado.
      */
@@ -378,6 +440,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiDeslogar;
     private javax.swing.JMenuItem jmiGerarRelatorioTodosUsuarios;
     private javax.swing.JMenuItem jmiGerarRelatorioUsuario;
+    private javax.swing.JMenuItem jmiPesquisaSatisfacao;
+    private javax.swing.JMenuItem jmiPesquisaSatisfacaoCliente;
     private javax.swing.JMenuItem jmiRocketLeague;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,194 @@
+FUNCTION_BLOCK eSportBetting
+
+VAR_INPUT
+	pontosPergunta1 : REAL;
+	pontosPergunta2 : REAL;
+	pontosPergunta3 : REAL;
+	pontosPergunta4 : REAL;
+	pontosPergunta5 : REAL;
+END_VAR
+
+VAR_OUTPUT
+	notaFinal: REAL;
+END_VAR
+
+FUZZIFY pontosPergunta1
+	TERM ruim := trape 0 0 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 10 10;
+END_FUZZIFY
+
+FUZZIFY pontosPergunta2
+	TERM ruim := trape 0 0 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 10 10;
+END_FUZZIFY
+
+FUZZIFY pontosPergunta3
+	TERM ruim := trape 0 0 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 10 10;
+END_FUZZIFY
+
+FUZZIFY pontosPergunta4
+	TERM ruim := trape 0 0 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 10 10;
+END_FUZZIFY
+
+FUZZIFY pontosPergunta5
+	TERM ruim := trape 0 0 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 10 10;
+END_FUZZIFY
+
+DEFUZZIFY notaFinal
+	TERM ruim := trape 0 1 3 4;
+	TERM bom := trape 4 5 7 8;
+	TERM excelente := trape 8 9 9 10;
+
+
+	//METHOD: COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK No1
+	AND : MIN;
+	ACT : MIN;
+	ACCU : MAX;	
+
+	RULE 1 : IF pontosPergunta1 IS ruim AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS ruim AND pontosPergunta5 IS ruim THEN notaFinal IS ruim;
+
+	RULE 2 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 3 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS excelente 
+	AND pontosPergunta4 IS excelente AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 4 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 5 : IF pontosPergunta1 IS ruim AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 6 : IF pontosPergunta1 IS ruim AND pontosPergunta2 IS ruim AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 7 : IF pontosPergunta1 IS ruim AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 8 : IF pontosPergunta1 IS ruim AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS ruim AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 9 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS ruim AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 10 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 11 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS ruim THEN notaFinal IS ruim;
+
+	RULE 12 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 13 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 14 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 15 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 16 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS ruim AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 17 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 18 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS ruim THEN notaFinal IS ruim;
+
+	RULE 19 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 20 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 21 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 22 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 23 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS ruim AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS ruim;
+
+	RULE 24 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS ruim;
+
+	RULE 25 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS ruim;
+
+	RULE 26 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS ruim;
+
+	RULE 27 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS ruim;
+
+	RULE 28 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS ruim 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS ruim;
+
+	RULE 29 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+	
+	RULE 30 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 31 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 32 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 33 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 34 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS excelente 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 35 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+
+	RULE 36 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 37 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 38 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 39 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 40 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS excelente 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 41 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 42 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS excelente 
+	AND pontosPergunta4 IS excelente AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 43 : IF pontosPergunta1 IS excelente AND pontosPergunta2 IS excelente AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS excelente AND pontosPergunta5 IS excelente THEN notaFinal IS excelente;
+
+	RULE 44 : IF pontosPergunta1 IS bom AND pontosPergunta2 IS bom AND pontosPergunta3 IS bom 
+	AND pontosPergunta4 IS bom AND pontosPergunta5 IS bom THEN notaFinal IS bom;
+	
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

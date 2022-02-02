@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Administrador;
 import Model.Cliente;
+import Model.PesquisaSatisfacaoObject;
 import Util.PropertiesHandler;
 import Util.ReturnClienteDataDB;
 import java.sql.Connection;
@@ -476,6 +477,88 @@ public class eSportBettingDAO {
             con.close();
 
             return dadosCliente;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int inserePesquisaSatisfacao(String usuario, PesquisaSatisfacaoObject pesquisaSatisfacaoObject) {
+        try {
+
+            iniciarConexao();
+
+            Statement statement = con.createStatement();
+
+            String query = "insert into pesquisasatisfacao(select retornaIdCliente('" + usuario + "'), "
+                    + pesquisaSatisfacaoObject.getPontosPergunta1() + ", " + pesquisaSatisfacaoObject.getPontosPergunta2()
+                    + ", " + pesquisaSatisfacaoObject.getPontosPergunta3() + ", "
+                    + pesquisaSatisfacaoObject.getPontosPergunta4() + ", " + pesquisaSatisfacaoObject.getPontosPergunta5() + ");";
+
+            int res = statement.executeUpdate(query);
+
+            con.close();
+
+            return 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
+    }
+
+    public int returnQtdRegistrosPesquisaSatisfacao() {
+        try {
+
+            iniciarConexao();
+
+            Statement statement = con.createStatement();
+
+            String query = "select count(*) as qtdpesquisas from pesquisasatisfacao;";
+
+            ResultSet res = statement.executeQuery(query);
+
+            con.close();
+
+            while (res.next()) {
+                return res.getInt("qtdpesquisas");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
+    }
+
+    public PesquisaSatisfacaoObject returnDadosPesquisaSatisfacao() {
+        try {
+
+            iniciarConexao();
+
+            Statement statement = con.createStatement();
+
+            String query = "select sum(pontospergunta1) as somapontos1, sum(pontospergunta2)as somapontos2, sum(pontospergunta3)as somapontos3, "
+                    + "sum(pontospergunta4) as somapontos4, sum(pontospergunta5) as somapontos5 from pesquisasatisfacao;";
+
+            ResultSet res = statement.executeQuery(query);
+
+            PesquisaSatisfacaoObject pso = null;
+
+            while (res.next()) {
+                pso = new PesquisaSatisfacaoObject(
+                        res.getInt("somapontos1"),
+                        res.getInt("somapontos2"),
+                        res.getInt("somapontos3"),
+                        res.getInt("somapontos4"),
+                        res.getInt("somapontos5")
+                );
+            }
+
+            con.close();
+
+            return pso;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
